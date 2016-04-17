@@ -1,0 +1,225 @@
+#!/bin/bash
+# 请不要在window下进行编辑修改
+# 自定义函数库  
+# author kouga-huang
+# since 2016-03-30
+
+
+currentPath=$(cd `dirname $0`; pwd) #当前路径
+
+####################################命令执行路径########################
+startQueue=$currentPath"/../../yii queue/start-message-queue" #启动队列命令路径
+
+startDelayQueue=$currentPath"/../../yii queue/start-delayed-message-queue" #启动延时队列命令路径
+
+startPreDeleteQueue=$currentPath"/../../yii queue/start-pre-delete-message-queue" #启动预删除队列命令路径
+
+startPersistent=$currentPath"/../../yii queue/start-persistent" #启动归档命令路径
+
+execRedis=" redis-cli -h 192.168.30.126 -p 6379" #redis启动路径
+
+startQueueMonitor=$currentPath"/queue_service_monitor.sh" #启动队列监控命令路径
+
+########################################################################
+
+####################################日志归档路径########################
+
+queueLog=$currentPath"/../../runtime/queue_service_"$(date '+%Y-%m-%d')".log" #消息队列日志
+queueMonitorLog=$currentPath"/../../runtime/queue_monitor_"$(date '+%y-%m-%d')".log" #消息监控日志
+delayLog=$currentPath"/../../runtime/queue_delay_"$(date '+%y-%m-%d')".log" #延时推送日志
+deleteLog=$currentPath"/../../runtime/queue_delete_"$(date '+%y-%m-%d')".log" #删除推送日志
+persisentLog=$currentPath"/../../runtime/queue_persistent_"$(date '+%y-%m-%d')".log" #消息归档日志
+########################################################################
+
+toEmail="hjw@feibo.cn"
+#######################################################################
+# 发送邮件
+# $1 收件邮箱
+# $2 邮件主题
+# $3 邮件内容
+# author kouga-huang
+# since 2016-03-30
+function sendEmail()
+{
+    echo $3 | mail -s $2 $1
+}
+
+
+# 启动消息队列进程
+# $1 消息队列等级
+# $2 消息队列进程休眠时间
+# author kouga-huang
+# since 2016-03-30
+function startQueueCommand()
+{
+    startQueueCommand=$startQueue" "$1" "$2
+    if [ $(ps -ef|grep "$startQueueCommand"|grep -v grep |wc -l) -eq 0 ]
+    then
+        nohup php $startQueue $1 $2 >>"$queueLog" 2>>"$queueLog" &
+        if [ $? -ne 0 ]
+        then
+            echo "queue level is $1,start failed"
+            exit 2
+        else
+            echo "queue level is $1 and it start successful ,the pid is "$!
+            exit 0
+        fi
+    else
+        echo "queue level is $1 and it running"
+        exit 1
+    fi
+}
+
+# 消息归档进程
+#
+# $1 消息队列进程休眠时间
+# author kouga-huang
+# since 2016-03-30
+function startPerSistentCommand()
+{
+    startPerSistentCommand=$startPersistent" "$1
+    if [ $(ps -ef|grep "$startPerSistentCommand"|grep -v grep |wc -l) -eq 0 ]
+    then
+        nohup php $startPerSistentCommand >>"$persisentLog" 2>>"$persisentLog" &
+        if [ $? -ne 0 ]
+        then
+            echo "persistent process,start failed"
+            exit 2
+        else
+            echo "persistent process start successful ,the pid is "$!
+            exit 0
+        fi
+    else
+        echo "persistent process and it running"
+        exit 1
+    fi
+}
+
+# 启动消息预删除
+# $1 消息队列进程休眠时间
+# author kouga-huang
+# since 2016-03-30
+function startDeleteCommand()
+{
+    startDeleteCommand=$startPreDeleteQueue" "$1
+    if [ $(ps -ef|grep "$startDeleteCommand"|grep -v grep |wc -l) -eq 0 ]
+    then
+        nohup php $startDeleteCommand >>"$deleteLog" 2>>"$deleteLog" &
+        if [ $? -ne 0 ]
+        then
+            echo "delete process,start failed"
+            exit 2
+        else
+            echo "delete process start successful ,the pid is "$!
+            exit 0
+        fi
+    else
+        echo "delete process and it running"
+        exit 1
+    fi
+}
+
+# 启动延时推送进程
+# $1 消息队列进程休眠时间
+# author kouga-huang
+# since 2016-03-30
+function startDelayCommand()
+{
+    startDelayCommand=$startDelayQueue" "$1
+    if [ $(ps -ef|grep "$startDelayCommand"|grep -v grep |wc -l) -eq 0 ]
+    then
+        nohup php $startDelayCommand >>"$delayLog" 2>>"$delayLog" &
+        if [ $? -ne 0 ]
+        then
+            echo "delay process start failed"
+            exit 2
+        else
+            echo "delay process start successful ,the pid is "$!
+            exit 0
+        fi
+    else
+        echo "delay process is $1 and it running"
+        exit 1
+    fi
+}
+
+
+
+# 判断指定进程是否存在
+# $1 进程路径
+# 返回1 标识进程不存在， 返回0表示进程存在
+function isExistForProcess()
+{
+    if [ $(ps -ef|grep "$1"|grep -v grep|wc -l) -eq 0 ]
+    then
+        echo "the process not exist"
+        exit 1
+    else
+        echo "the process exist"
+        exit 0
+    fi
+}
+
+
+# 获取字符串 从redis，数据结构为字符串
+# author kouga-huang
+# since 2016-03-31
+# param $1 key
+function getFromRedis()
+{
+    value=$($execRedis get "$1")
+    echo $value
+}
+
+
+
+#PU占用率
+function checkCPU()
+{
+    cpuValue=$(ps -p $1 -o pcpu)
+    echo $cpuValue
+}
+
+# 检测内存占用率
+function checkMEM()
+{
+    memValue=$(ps -p $1 -o vsz)
+    echo $memValue
+}
+
+# 查看进程的基本信息
+function proInfo()
+{
+    proInfo=$(ps -fp $1)
+    echo $proInfo
+}
+# author kouga-huang
+# since 2016-03-31
+# param $1 key
+function delFromRedis()
+{
+    value=$($execRedis del "$1")
+    echo $value
+}
+# 设置字符串 从redis，数据结构为字符串
+# author kouga-huang
+# since 2016-03-31
+# param $1 key
+function setFromRedis()
+{
+    value=$($execRedis set "$1" "$2")
+    echo $value
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
