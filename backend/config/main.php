@@ -22,6 +22,19 @@ return [
         'allow'=>['site/login','site/error','site/test','queue/enqueue','queue/haveread','queue/push','queue/js-sdk-for-push-system']
     ],
     'components' => [
+        'wechat' => [
+            'class' => 'callmez\wechat\sdk\Wechat',
+            'appId' => '微信公众平台中的appid',
+            'appSecret' => '微信公众平台中的secret',
+            'token' => '微信服务器对接您的服务器验证token'
+        ],
+        /*//多公众号使用方式
+        $wechat = Yii::createObject([
+            'class' => 'callmez\wechat\sdk\Wechat',
+            'appId' => '微信公众平台中的appid',
+            'appSecret' => '微信公众平台中的secret',
+            'token' => '微信服务器对接您的服务器验证token'
+        ]);*/
         'view' => [
             'theme' => [
                 'pathMap' => ['@backend/views' => '@backend/views/themes/adminlte'],
