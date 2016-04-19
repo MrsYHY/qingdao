@@ -23,7 +23,8 @@
         "kucha/ueditor": ">=1.2",
         "yiisoft/yii2-imagine": "~2.0.0",
         "yiisoft/yii2-redis": "^2.0",
-        "callmez/yii2-wechat-sdk":"dev-master"
+        "callmez/yii2-wechat-sdk":"dev-master",
+        "2amigos/yii2-date-picker-widget": "*"
     },
     "require-dev": {
         "yiisoft/yii2-codeception": "*",
@@ -37,7 +38,7 @@
     "extra": {
         "asset-installer-paths": {
             "npm-asset-library": "vendor/npm",
-            "bower-asset-library": "vendor/bower-asset"
+            "bower-asset-library": "vendor/bower"
         }
     }
 }

@@ -36,11 +36,11 @@ class UserForm extends BaseForm{
             ['status', 'default', 'value' => User::STATUS_ACTIVE],
             ['status', 'in', 'range' => [User::STATUS_ACTIVE, User::STATUS_DELETED]],
             ['email', 'email'],
-            ['username','unique','targetClass' => '\common\activeRecords\User','message-manage'=>'系统中已存在此用户名','on'=>'register'],
+            ['username','unique','targetClass' => '\common\activeRecords\User','message'=>'系统中已存在此用户名','on'=>'register'],
             [['username','password','rePassword'],'required','on'=>'register'],
             ['username','match','pattern'=>'/^[a-z][0-9a-z]{4,10}$/'],
-            ['password', 'match','pattern'=>'/^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[!@*#$]).{6,12}$/','message-manage'=>'密码必须包含数子字母和!@#$特殊字符'],
-            ['rePassword','compare','compareAttribute'=>'password','message-manage'=>'两次输入的密码不一致'],
+            ['password', 'match','pattern'=>'/^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[!@*#$]).{6,12}$/','message'=>'密码必须包含数子字母和!@#$特殊字符'],
+            ['rePassword','compare','compareAttribute'=>'password','message'=>'两次输入的密码不一致'],
         ];
     }
 
