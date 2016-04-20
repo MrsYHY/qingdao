@@ -18,7 +18,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <h3 class="box-title"><?= $this->title?></h3>
                 <div class="box-tools">
                     <div class="input-group input-group-sm" >
-                        <a class="btn btn-circle btn-default btn-sm" href="<?= \yii\helpers\Url::toRoute('prize-create')?>">
+                        <a class="btn btn-circle btn-default btn-sm" href="<?= \yii\helpers\Url::toRoute(['prizes/create','activity_id'=>$model->id])?>">
                             <i class="fa fa-plus"></i><span class="hidden-480">添加奖品</span>
                         </a>
                     </div>
@@ -37,7 +37,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 <?= yii\widgets\DetailView::widget([
                                     'model' => $model,
                                     'attributes' => [
-                                        //'id',
+                                        'id',
                                         'title',
                                         'content',
                                         'start_time',
@@ -60,9 +60,20 @@ $this->params['breadcrumbs'][] = $this->title;
                                     'columns' => [
                                         ['class' => 'yii\grid\SerialColumn'],
                                         'name',
-                                        'prize_level',
+                                        ['attribute'=>'prize_level','value'=>function($model){
+                                                if($model->prize_level === null){return '未知等级';}
+                                                switch($model->prize_level){
+                                                    case 1:return"一等奖";break;
+                                                    case 2:return"二等奖";break;
+                                                    case 3:return"三等奖";break;
+                                                    case 4:return"四等奖";break;
+                                                    case 5:return"五等奖";break;
+                                                    default:return "未知等级";
+                                                }
+                                            }],
                                         'num',
-                                        'win_rate'
+                                        'win_rate',
+                                        ['class' => 'yii\grid\ActionColumn','controller'=>'prizes','header'=>'操作'],
                                     ],
                                 ]); ?>
                             </div>

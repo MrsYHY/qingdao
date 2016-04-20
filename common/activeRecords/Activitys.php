@@ -15,7 +15,7 @@ use Yii;
  */
 class Activitys extends \common\activeRecords\BaseActiveRecord
 {
-    public $id;
+
     /**
      * @inheritdoc
      */
@@ -55,7 +55,7 @@ class Activitys extends \common\activeRecords\BaseActiveRecord
      */
     public function getPrize()
     {
-        return $this->hasMany(Prizes::className(), ['child' => 'id']);
+        return $this->hasMany(Prizes::className(), ['activity_id' => 'id']);
     }
 
     public static function findByPk($pk){

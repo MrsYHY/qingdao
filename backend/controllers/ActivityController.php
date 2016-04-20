@@ -62,12 +62,6 @@ class ActivityController extends BaseController{
         ]);
     }
 
-    /**
-     * 奖品创建
-     */
-    public function actionPrizeCreate(){
-
-    }
 
     public function actionView($id){
         $model = Activitys::findByPk($id);
@@ -76,16 +70,23 @@ class ActivityController extends BaseController{
         }
         $dataProvider = new ActiveDataProvider([
             'query'=>$model->getPrize(),
-//            'pagination' => [
-//                'pageSize' => 10,
-//            ],
+            'pagination' => [
+                'pageSize' => 10,
+            ],
         ]);
 
         return $this->render('view',compact('model','dataProvider'));
     }
 
-    public function actionDelete(){
-
+    public function actionDelete($id){
+        $model = Activitys::findByPk($id);
+        if(empty($model)){
+            throw new NotFoundHttpException("找不到活动：{$id}对应的记录");
+        }
+        if(!$model->delete()){
+            throw new DbException("删除活动：{$id}对应的记录失败");
+        }
+        return $this->redirect(['list']);
     }
 
     public function actionUpdate($id){

@@ -1,22 +1,19 @@
 <?php
 
-use backend\widgets\metronic\ActiveForm;
 
-use common\activeRecords\AuthItem;
-use yii\helpers\Html;
-
-
+use dosamigos\datepicker\DatePicker;
 /* @var $this yii\web\View */
 /* @var $model common\models\AuthItem */
 
-$this->title = '奖品创建';
+$this->title = '修改奖品';
 $this->params['breadcrumbs'][] ='活动管理';
 $this->params['breadcrumbs'][] = $this->title;
+//$this->params['breadcrumbs'][] = '修改';
 ?>
 <div class="col-md-12">
     <div class="portlet light">
         <div class="portlet-body form">
-            <?php $form = ActiveForm::begin()?>
+            <?php $form = \backend\widgets\metronic\ActiveForm::begin(['options'=>['class'=>'form-horizontal']])?>
             <!-- BEGIN FORM-->
             <div class="form-body">
                 <?= $form->field($model,'activity_id')->hiddenInput();?>
@@ -29,7 +26,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <div class="form-actions">
                 <div class="row">
                     <div class="col-md-offset-3 col-md-9">
-                        <button type="submit" class="btn green">增加</button>
+                        <button type="submit" class="btn green">修改</button>
                     </div>
                 </div>
             </div>
@@ -37,9 +34,3 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
     </div>
 </div>
-<script>
-    $("#authitem-wait").change(function(){
-        $("#authitem-name").val($("#authitem-wait").val());
-        $("#authitem-type").val(2);
-    });
-</script>

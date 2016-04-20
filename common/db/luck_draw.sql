@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50710
 File Encoding         : 65001
 
-Date: 2016-04-19 18:11:10
+Date: 2016-04-20 17:34:22
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -26,11 +26,12 @@ CREATE TABLE `activitys` (
   `start_time` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   `end_time` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of activitys
 -- ----------------------------
+INSERT INTO `activitys` VALUES ('1', '测试测试测试', '测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试', '2016-04-01 00:00:00', '2016-04-23 00:00:00');
 
 -- ----------------------------
 -- Table structure for auth_assignment
@@ -74,6 +75,12 @@ CREATE TABLE `auth_item` (
 -- ----------------------------
 -- Records of auth_item
 -- ----------------------------
+INSERT INTO `auth_item` VALUES ('activity/create', '2', '活动创建', null, '', null, null);
+INSERT INTO `auth_item` VALUES ('activity/delete', '2', '活动删除', null, '', null, null);
+INSERT INTO `auth_item` VALUES ('activity/list', '2', '活动列表', null, '', null, null);
+INSERT INTO `auth_item` VALUES ('activity/prize-create', '2', '奖品创建', null, '', null, null);
+INSERT INTO `auth_item` VALUES ('activity/update', '2', '活动更新', null, '', null, null);
+INSERT INTO `auth_item` VALUES ('activity/view', '2', '活动查看', null, '', null, null);
 INSERT INTO `auth_item` VALUES ('admin', '1', '管理员', null, null, null, null);
 INSERT INTO `auth_item` VALUES ('auth/ajax-link-auth', '2', 'ajax关联权限', null, null, null, null);
 INSERT INTO `auth_item` VALUES ('auth/assign-auth', '2', '分配权限', null, null, null, null);
@@ -92,6 +99,10 @@ INSERT INTO `auth_item` VALUES ('menu/index', '2', '菜单管理', null, null, n
 INSERT INTO `auth_item` VALUES ('menu/update', '2', '更新菜单', null, null, null, null);
 INSERT INTO `auth_item` VALUES ('menu/view', '2', '查看菜单', null, null, null, null);
 INSERT INTO `auth_item` VALUES ('menu_manage', '1', '菜单管理', null, null, null, null);
+INSERT INTO `auth_item` VALUES ('prizes/create', '2', '奖品创建', null, '', null, null);
+INSERT INTO `auth_item` VALUES ('prizes/delete', '2', '奖品删除', null, '', null, null);
+INSERT INTO `auth_item` VALUES ('prizes/update', '2', '奖品更新', null, '', null, null);
+INSERT INTO `auth_item` VALUES ('prizes/view', '2', '奖品查看', null, '', null, null);
 INSERT INTO `auth_item` VALUES ('site/index', '2', '首页', null, null, null, null);
 INSERT INTO `auth_item` VALUES ('test/index', '2', '测试', null, null, null, null);
 INSERT INTO `auth_item` VALUES ('user/add-assignment', '2', '分配权限', null, null, null, null);
@@ -120,6 +131,12 @@ CREATE TABLE `auth_item_child` (
 -- ----------------------------
 -- Records of auth_item_child
 -- ----------------------------
+INSERT INTO `auth_item_child` VALUES ('admin', 'activity/create');
+INSERT INTO `auth_item_child` VALUES ('admin', 'activity/delete');
+INSERT INTO `auth_item_child` VALUES ('admin', 'activity/list');
+INSERT INTO `auth_item_child` VALUES ('admin', 'activity/prize-create');
+INSERT INTO `auth_item_child` VALUES ('admin', 'activity/update');
+INSERT INTO `auth_item_child` VALUES ('admin', 'activity/view');
 INSERT INTO `auth_item_child` VALUES ('auth_manage', 'auth/ajax-link-auth');
 INSERT INTO `auth_item_child` VALUES ('auth_manage', 'auth/assign-auth');
 INSERT INTO `auth_item_child` VALUES ('auth_manage', 'auth/create');
@@ -137,6 +154,10 @@ INSERT INTO `auth_item_child` VALUES ('menu_manage', 'menu/index');
 INSERT INTO `auth_item_child` VALUES ('menu_manage', 'menu/update');
 INSERT INTO `auth_item_child` VALUES ('menu_manage', 'menu/view');
 INSERT INTO `auth_item_child` VALUES ('admin', 'menu_manage');
+INSERT INTO `auth_item_child` VALUES ('admin', 'prizes/create');
+INSERT INTO `auth_item_child` VALUES ('admin', 'prizes/delete');
+INSERT INTO `auth_item_child` VALUES ('admin', 'prizes/update');
+INSERT INTO `auth_item_child` VALUES ('admin', 'prizes/view');
 INSERT INTO `auth_item_child` VALUES ('backend_manage', 'site/index');
 INSERT INTO `auth_item_child` VALUES ('user_manage', 'user/add-assignment');
 INSERT INTO `auth_item_child` VALUES ('user_manage', 'user/create');
@@ -196,17 +217,19 @@ CREATE TABLE `menu` (
   `parent` mediumint(9) NOT NULL DEFAULT '0',
   `index` tinyint(3) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=25 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=27 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of menu
 -- ----------------------------
 INSERT INTO `menu` VALUES ('4', 'javascript:;', '系统设置', '', '1', 'icon-settings', '0', '19');
-INSERT INTO `menu` VALUES ('5', 'auth/index', '权限管理', '', '1', 'glyphicon glyphicon-tasks', '0', '15');
+INSERT INTO `menu` VALUES ('5', 'auth/index', '权限管理', '', '1', 'glyphicon glyphicon-tasks', '4', '15');
 INSERT INTO `menu` VALUES ('8', 'site/index', '控制面板', '控制面板', '1', 'icon-home', '0', '0');
 INSERT INTO `menu` VALUES ('9', 'menu/index', '菜单管理', '', '1', null, '4', '15');
 INSERT INTO `menu` VALUES ('10', 'javascript:;', '用户管理', '', '1', 'icon-users', '0', '12');
 INSERT INTO `menu` VALUES ('23', 'user/index', '用户列表', '', '1', '', '10', '20');
+INSERT INTO `menu` VALUES ('25', 'javascript:;', '活动管理', '', '1', '', '0', '3');
+INSERT INTO `menu` VALUES ('26', 'activity/list', '活动列表', '', '1', '', '25', '1');
 
 -- ----------------------------
 -- Table structure for prizes
@@ -214,17 +237,18 @@ INSERT INTO `menu` VALUES ('23', 'user/index', '用户列表', '', '1', '', '10'
 DROP TABLE IF EXISTS `prizes`;
 CREATE TABLE `prizes` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `acrivity_id` int(11) DEFAULT NULL COMMENT '所属活动',
+  `activity_id` int(11) DEFAULT NULL COMMENT '所属活动',
   `name` varchar(255) DEFAULT NULL COMMENT '奖品名称',
   `num` int(2) DEFAULT NULL COMMENT '奖品数量',
   `prize_level` tinyint(4) DEFAULT NULL COMMENT '奖品等级 0：特等奖 1：一等奖 2：二等奖 以此类推',
   `win_rate` float(5,3) DEFAULT NULL COMMENT '中奖率',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of prizes
 -- ----------------------------
+INSERT INTO `prizes` VALUES ('3', '1', '45678', '78', '0', '0.000');
 
 -- ----------------------------
 -- Table structure for terminal_user
