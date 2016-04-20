@@ -42,9 +42,9 @@ $tpl_img_url = $this->getAssetManager()->publish('@adminlte/dist/img/')[1];
         <!-- Logo -->
         <?php
             echo Html::a('<!-- mini logo for sidebar mini 50x50 pixels -->
-            <span class="logo-mini"><b>推送</b></span>
+            <span class="logo-mini"><b>摇奖</b></span>
             <!-- logo for regular state and mobile devices -->
-            <span class="logo-lg"><b>推送</b>系统</span>',['site/index'],['class'=>'logo']);
+            <span class="logo-lg"><b>青岛摇奖</b>系统</span>',['site/index'],['class'=>'logo']);
         ?>
 <!--        -->
         <!-- Header Navbar: style can be found in header.less -->

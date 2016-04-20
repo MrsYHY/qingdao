@@ -19,7 +19,8 @@ return [
     'modules' => [],
     'as accessControl' => [
         'class'=>'backend\components\AccessControl',
-        'allow'=>['site/login','site/error','site/test','queue/enqueue','queue/haveread','queue/push','queue/js-sdk-for-push-system']
+        'allow'=>['site/login','site/error','site/test'],
+        'controller'=>['wc-site'],
     ],
     'components' => [
         'wechat' => [

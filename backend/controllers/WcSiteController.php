@@ -23,4 +23,9 @@ class WcSiteController extends BaseController{
         return $this->service;
     }
 
+    public function actionIndex(){
+        $this->layout = 'weixin';
+        return $this->render('index');
+    }
+
 } 

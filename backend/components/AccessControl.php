@@ -17,6 +17,7 @@ use Yii;
 class AccessControl extends Behavior{
 
     public $allow=[];
+    public $controller = [];
 
     public function init()
     {
@@ -35,6 +36,13 @@ class AccessControl extends Behavior{
     public function beforeFilter()
     {
         $route = \Yii::$app->controller->getRoute();
+
+        // route 仅仅是控制器/action  如果引入module需要修改此代码段
+        $controler = explode('/',$route)[0];
+        if(in_array($controler,$this->controller)){
+            return true;
+        }
+
         if(!in_array($route,$this->allow)){
             if(Yii::$app->user->getIsGuest())
                 Yii::$app->user->loginRequired();
