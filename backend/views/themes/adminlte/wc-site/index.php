@@ -26,7 +26,7 @@ $musicPath = $this->getAssetManager()->publish('@wechat/music/')[1];
     </div>
 </div>
 
-<!-- 玩法说明 -->
+
 <div class="row" style="text-align: center;   position: absolute; bottom: 17%; margin-bottom: 10px; left: 50%; margin-left: -100px; z-index: 998;">
     <div class="span1">
         &nbsp;

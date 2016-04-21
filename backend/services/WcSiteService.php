@@ -13,4 +13,6 @@ use common\services\BaseService;
 
 class WcSiteService extends BaseService{
 
+    static $PRIZE_FOR_IMAGE = ['QINGDAO'=>'qingdao','IWATCH'=>'watch'];
+
 } 

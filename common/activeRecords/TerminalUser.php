@@ -49,4 +49,14 @@ class TerminalUser extends \common\activeRecords\BaseActiveRecord
             'draw_luck_total' => 'Draw Luck Total',
         ];
     }
+
+    public static function getByTerminalUserToken($token){
+        $user = self::find()->where(['terminal_user_token'=>$token])->one();
+        if (empty($user)){
+            return false;
+        }
+        return $user;
+    }
+
+
 }

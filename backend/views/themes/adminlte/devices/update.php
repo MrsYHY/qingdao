@@ -5,8 +5,8 @@ use dosamigos\datepicker\DatePicker;
 /* @var $this yii\web\View */
 /* @var $model common\models\AuthItem */
 
-$this->title = '修改奖品';
-$this->params['breadcrumbs'][] ='活动管理';
+$this->title = '修改设备';
+$this->params['breadcrumbs'][] ='设备管理';
 $this->params['breadcrumbs'][] = $this->title;
 //$this->params['breadcrumbs'][] = '修改';
 ?>
@@ -16,13 +16,8 @@ $this->params['breadcrumbs'][] = $this->title;
             <?php $form = \backend\widgets\metronic\ActiveForm::begin(['options'=>['class'=>'form-horizontal']])?>
             <!-- BEGIN FORM-->
             <div class="form-body">
-                <?= $form->field($model,'activity_id')->hiddenInput();?>
-                <?= $form->field($model,'activityName')?>
-                <?= $form->field($model,'keyword')->dropDownList(\common\activeRecords\Prizes::$prizes)?>
-                <?= $form->field($model,'prize_level')->dropDownList([''=>'请选择',0=>'特等奖',1=>'一等奖',2=>'二等奖',3=>'三等奖',4=>'四等奖',5=>'五等奖'])?>
-                <?= $form->field($model,'name')?>
-                <?= $form->field($model,'num')?>
-                <?= $form->field($model,'win_rate')?>
+                <?= $form->field($model, 'user_id') ?>
+                <?= $form->field($model, 'content')->textarea(['row'=>10]) ?>
             </div>
             <div class="form-actions">
                 <div class="row">

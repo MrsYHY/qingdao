@@ -10,6 +10,9 @@ namespace backend\controllers;
 
 
 use backend\services\WcSiteService;
+use common\activeRecords\LuckDrawResult;
+use common\activeRecords\Prizes;
+use common\activeRecords\TerminalUser;
 use common\controller\BaseController;
 
 class WcSiteController extends BaseController{
@@ -50,8 +53,33 @@ class WcSiteController extends BaseController{
 
     /**
      * 摇奖结果页
+     * @params user_token 用户的token
      */
     public function actionLuckDrawResult(){
+        $this->layout = 'weixin';
+        $service = $this->getService();
+        $params = $this->request();
+
+        $noValidForUser = false;
+        if ( empty($params['user_token']) ){
+            $noValidForUser = true;
+        }else{
+            $user = TerminalUser::getByTerminalUserToken($params['user_token']);
+            if ($user === false){
+                $noValidForUser = true;
+            }else{
+                $luckResult = LuckDrawResult::getNotAwardByUserId($user->id);
+                if( empty($luckResult) ){
+                    $result = -1;
+                }else{
+                    $prize = Prizes::find($luckResult->prize_id)->one();
+                    $resultKeyword = WcSiteService::$PRIZE_FOR_IMAGE[$prize->keyword];
+                    $result = $luckResult->prize_level;//中奖等级
+                }
+            }
+        }
+
+        return $this->render('luck-draw-result',compact('noValidForUser','result','resultKeyword'));
 
     }
     

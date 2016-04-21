@@ -10,6 +10,7 @@ use Yii;
  * @property integer $id
  * @property integer $activity_id
  * @property string $name
+ * @property string $keyword
  * @property integer $num
  * @property integer $prize_level
  * @property double $win_rate
@@ -27,6 +28,14 @@ class Prizes extends \common\activeRecords\BaseActiveRecord
         5=>'五等奖',
     ];
 
+    static $prizes = [
+        'IWATCH'=>'苹果iWatch',
+        'QINGDAO'=>'青岛啤酒',
+        'CHONGDIANBAO'=>'充电宝',
+        'DAHUOJI'=>'经典1903打火机',
+        'PIJIUBOLITAOBEN'=>'青岛啤酒玻璃套杯',
+        'IPONE6S'=>'IPONE6S'];
+
     /**
      * @inheritdoc
      */
@@ -41,6 +50,7 @@ class Prizes extends \common\activeRecords\BaseActiveRecord
     public function rules()
     {
         return [
+            ['keyword','safe'],
             [['num', 'prize_level'], 'integer'],
             [['win_rate'], 'number','min'=>0,'max'=>1],
             [['name'], 'string', 'max' => 255],
@@ -56,6 +66,7 @@ class Prizes extends \common\activeRecords\BaseActiveRecord
             'id' => 'ID',
             'activity_id' => '活动id',
             'activityName' => '活动主题',
+            'keyword'=>'奖品关键字',
             'name' => '奖品名称',
             'num' => '奖品数量',
             'prize_level' => '奖品等级',
