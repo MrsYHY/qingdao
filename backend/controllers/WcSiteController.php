@@ -23,9 +23,37 @@ class WcSiteController extends BaseController{
         return $this->service;
     }
 
+    public function actionWeChat(){
+
+    }
+
     public function actionIndex(){
         $this->layout = 'weixin';
         return $this->render('index');
     }
+
+    /**
+     * 摇奖请求接口
+     */
+    public function actionLuckDraw(){
+        $service = $this->getService();
+        $params = $this->request();
+
+        //判断是否关注
+
+        //判断活动是否合法
+
+        //判断设备id是否合法
+
+
+    }
+
+    /**
+     * 摇奖结果页
+     */
+    public function actionLuckDrawResult(){
+
+    }
+    
 
 } 

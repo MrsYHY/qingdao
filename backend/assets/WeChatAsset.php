@@ -11,19 +11,22 @@ namespace backend\assets;
 use yii\web\AssetBundle;
 
 class WeChatAsset extends AssetBundle{
-    public $sourcePath = '@backend/web/wechat';
+
+    public $basePath = '@webroot';
+    public $baseUrl = '@web';
+
     public $css = [
-//        'css/AdminLTE.min.css',
-//        'css/skins/_all-skins.min.css'
+        '/wechat/css/bootswatch.min.css',
     ];
+
     public $js = [
-//        'js/app.min.js'
+
     ];
 
     public $depends = [
-//        'yii\web\YiiAsset',
+        'yii\web\YiiAsset',
         'yii\bootstrap\BootstrapAsset',
-//        'yii\bootstrap\BootstrapPluginAsset',
+        'yii\bootstrap\BootstrapPluginAsset',
 //        'backend\assets\CommonAsset'
     ];
 } 
