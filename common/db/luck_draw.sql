@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50710
 File Encoding         : 65001
 
-Date: 2016-04-20 17:34:22
+Date: 2016-04-22 14:17:37
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -91,6 +91,9 @@ INSERT INTO `auth_item` VALUES ('auth/update', '2', '修改权限', null, null, 
 INSERT INTO `auth_item` VALUES ('auth/view', '2', '浏览权限', null, null, null, null);
 INSERT INTO `auth_item` VALUES ('auth_manage', '1', '权限管理', null, null, null, null);
 INSERT INTO `auth_item` VALUES ('backend_manage', '1', '后台管理员', null, null, null, null);
+INSERT INTO `auth_item` VALUES ('devices/delete', '2', '设备删除', null, '', null, null);
+INSERT INTO `auth_item` VALUES ('devices/list', '2', '设备列表', null, '', null, null);
+INSERT INTO `auth_item` VALUES ('devices/update', '2', '设备更新', null, '', null, null);
 INSERT INTO `auth_item` VALUES ('menu/ajax-get-childen-menu', '2', 'ajax获取子菜单', null, null, null, null);
 INSERT INTO `auth_item` VALUES ('menu/ajax-menu-display', '2', 'ajax菜单显示/隐藏', null, null, null, null);
 INSERT INTO `auth_item` VALUES ('menu/create', '2', '添加菜单', null, null, null, null);
@@ -146,6 +149,9 @@ INSERT INTO `auth_item_child` VALUES ('auth_manage', 'auth/update');
 INSERT INTO `auth_item_child` VALUES ('auth_manage', 'auth/view');
 INSERT INTO `auth_item_child` VALUES ('admin', 'auth_manage');
 INSERT INTO `auth_item_child` VALUES ('admin', 'backend_manage');
+INSERT INTO `auth_item_child` VALUES ('admin', 'devices/delete');
+INSERT INTO `auth_item_child` VALUES ('admin', 'devices/list');
+INSERT INTO `auth_item_child` VALUES ('admin', 'devices/update');
 INSERT INTO `auth_item_child` VALUES ('menu_manage', 'menu/ajax-get-childen-menu');
 INSERT INTO `auth_item_child` VALUES ('menu_manage', 'menu/ajax-menu-display');
 INSERT INTO `auth_item_child` VALUES ('menu_manage', 'menu/create');
@@ -186,22 +192,44 @@ CREATE TABLE `auth_rule` (
 -- ----------------------------
 
 -- ----------------------------
+-- Table structure for devices
+-- ----------------------------
+DROP TABLE IF EXISTS `devices`;
+CREATE TABLE `devices` (
+  `id` int(11) NOT NULL,
+  `device_name` varchar(255) DEFAULT NULL COMMENT '设备名称',
+  `device_keyword` varchar(255) NOT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  `shake_num` int(5) DEFAULT NULL,
+  PRIMARY KEY (`id`,`device_keyword`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of devices
+-- ----------------------------
+INSERT INTO `devices` VALUES ('1', '设备1', '123456789qwew', '1', '1');
+
+-- ----------------------------
 -- Table structure for luck_draw_result
 -- ----------------------------
 DROP TABLE IF EXISTS `luck_draw_result`;
 CREATE TABLE `luck_draw_result` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) DEFAULT NULL COMMENT '用户id',
   `result` tinyint(2) DEFAULT NULL COMMENT '中奖结果 0：未中奖 1：中奖',
   `activity_id` int(11) DEFAULT NULL COMMENT '所属活动',
   `prize_id` int(11) DEFAULT NULL COMMENT '所属奖品',
   `prize_level` tinyint(4) DEFAULT NULL COMMENT '奖品等级',
   `created_at` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '创建时间',
+  `device_id` int(11) DEFAULT NULL COMMENT '设备id',
+  `is_award` tinyint(1) DEFAULT NULL COMMENT '0 已兑奖 1未兑奖',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of luck_draw_result
 -- ----------------------------
+INSERT INTO `luck_draw_result` VALUES ('1', '1', '1', '1', '4', '2', '2016-04-22 13:00:48', '1', '1');
 
 -- ----------------------------
 -- Table structure for menu
@@ -217,7 +245,7 @@ CREATE TABLE `menu` (
   `parent` mediumint(9) NOT NULL DEFAULT '0',
   `index` tinyint(3) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=27 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=29 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of menu
@@ -230,6 +258,8 @@ INSERT INTO `menu` VALUES ('10', 'javascript:;', '用户管理', '', '1', 'icon-
 INSERT INTO `menu` VALUES ('23', 'user/index', '用户列表', '', '1', '', '10', '20');
 INSERT INTO `menu` VALUES ('25', 'javascript:;', '活动管理', '', '1', '', '0', '3');
 INSERT INTO `menu` VALUES ('26', 'activity/list', '活动列表', '', '1', '', '25', '1');
+INSERT INTO `menu` VALUES ('27', 'javascript:;', '设备管理', '', '1', '', '0', '3');
+INSERT INTO `menu` VALUES ('28', 'devices/list', '设备列表', '', '1', '', '27', '1');
 
 -- ----------------------------
 -- Table structure for prizes
@@ -242,13 +272,15 @@ CREATE TABLE `prizes` (
   `num` int(2) DEFAULT NULL COMMENT '奖品数量',
   `prize_level` tinyint(4) DEFAULT NULL COMMENT '奖品等级 0：特等奖 1：一等奖 2：二等奖 以此类推',
   `win_rate` float(5,3) DEFAULT NULL COMMENT '中奖率',
+  `keyword` varchar(255) DEFAULT NULL COMMENT '奖品关键字',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of prizes
 -- ----------------------------
-INSERT INTO `prizes` VALUES ('3', '1', '45678', '78', '0', '0.000');
+INSERT INTO `prizes` VALUES ('3', '1', '45678', '78', '0', '0.000', 'QINGDAO');
+INSERT INTO `prizes` VALUES ('4', '1', '啤酒12瓶', '5', '2', '0.100', 'QINGDAO');
 
 -- ----------------------------
 -- Table structure for terminal_user
@@ -262,11 +294,12 @@ CREATE TABLE `terminal_user` (
   `draw_luck_num` int(2) DEFAULT NULL COMMENT '抽奖机会数',
   `draw_luck_total` int(3) DEFAULT NULL COMMENT '总共抽奖次数',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of terminal_user
 -- ----------------------------
+INSERT INTO `terminal_user` VALUES ('1', '123456789dfd', '0', '14', '14', '14');
 
 -- ----------------------------
 -- Table structure for user
