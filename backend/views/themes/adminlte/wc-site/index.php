@@ -86,13 +86,13 @@ $musicPath = $this->getAssetManager()->publish('@wechat/music/')[1];
                     myAudioWin.play();//播放
                     setTimeout(function(){
                         $.ajax({
-                            url:<?='"'.\yii\helpers\Url::to(['wc-site/luck-draw']).'"'?>,
+                            url:<?='"'.Yii::$app->urlManager->createAbsoluteUrl(['wc-site/luck-draw']).'"'?>,
                             type:"POST",
                             data:{user_token:user_token,activity_id:activity_id,device_id:device_id},
                             dataType:'json',
                             success:function(data){
                                 if (data.code == 1) {
-                                    var luckDrawResultUrl = <?='"'.\yii\helpers\Url::to(['wc-site/luck-draw-result']).'"'?>;
+                                    var luckDrawResultUrl = <?='"'.Yii::$app->urlManager->createAbsoluteUrl(['wc-site/luck-draw-result']).'"'?>;
                                     res_user_token = data.message.user_token;
                                     res_activity_id = data.message.activity_id;
                                     res_device_id = data.message.device_id;
