@@ -9,6 +9,7 @@
 namespace backend\controllers;
 
 
+use backend\forms\WeChatForm;
 use backend\services\WcSiteService;
 use common\activeRecords\LuckDrawResult;
 use common\activeRecords\Prizes;
@@ -32,23 +33,39 @@ class WcSiteController extends BaseController{
 
     public function actionIndex(){
         $this->layout = 'weixin';
-        return $this->render('index');
+        $wechatForm = new WeChatForm();
+        $wechatForm->setScenario('luck_draw_page');
+        if ($wechatForm->submit()) {
+            if (!$wechatForm->validate()) {
+
+            }
+        }
+        return $this->render('index',compact('wechatForm'));
     }
 
     /**
      * 摇奖请求接口
+     * @params user_token 用户token
+     * @params activity_id 活动id
+     * @params device_id 设备id
      */
     public function actionLuckDraw(){
         $service = $this->getService();
-        $params = $this->request();
 
-        //判断是否关注
+        $wechat = new WeChatForm();
+        $wechat->setScenario('luck_draw_request');
 
-        //判断活动是否合法
-
-        //判断设备id是否合法
-
-
+        if ( $wechat->submit() ){
+            if ( $wechat->validate() ){
+               $service->luckDraw( $wechat );
+            } else {
+                $errors = $wechat->getFirstErrors();
+                $firstError = reset($errors);
+                empty($firstError) ? $firstError = "未知错误" : '';
+                $this->failByJson($firstError);
+            }
+        }
+        $this->failByJson("没有传递相应的参数给我");
     }
 
     /**

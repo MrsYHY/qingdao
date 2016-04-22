@@ -68,11 +68,21 @@ class BaseService extends Model{
      * @since 2015-12-6
      * @param $params
      */
-    public function outputJson($params){
+    protected  function outputJson($message,$code){
         ob_clean();
-        header('Content-type: text/html; charset=utf8');
-        echo Json::encode($params);
+        $obj = new \stdClass();
+        $obj->code = $code;
+        $obj->message = $message;
+        header('Content-type: text/json; charset=utf8');
+        echo Json::encode($obj);
         exit;
+    }
+
+    protected function successByJson($message,$code=1){
+        $this->outputJson($message,$code);
+    }
+    protected function failByJson($message,$code=0){
+        $this->outputJson($message,$code);
     }
 
     /**

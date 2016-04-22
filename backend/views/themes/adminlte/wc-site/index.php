@@ -39,8 +39,11 @@ $musicPath = $this->getAssetManager()->publish('@wechat/music/')[1];
     </div>
 </div>
 <script>
+    var user_token = <?='"'.$wechatForm->user_token.'"'?>;
+    var activity_id = <?='"'.$wechatForm->activity_id.'"'?>;
+    var device_id = <?='"'.$wechatForm->device_id.'"'?>;
     $(document).ready(function(){
-        var myAudioWin = new Audio("<?=$musicPath?>/music/rock.mp3");
+        var myAudioWin = new Audio("<?=$musicPath?>/rock.mp3");
 
         if (window.DeviceMotionEvent) {
             // 移动浏览器支持运动传感事件
@@ -83,17 +86,20 @@ $musicPath = $this->getAssetManager()->publish('@wechat/music/')[1];
                     myAudioWin.play();//播放
                     setTimeout(function(){
                         $.ajax({
-                            url:'service.php',
+                            url:<?='"'.\yii\helpers\Url::to(['wc-site/luck-draw']).'"'?>,
                             type:"POST",
-                            data:{action:'rock'},
+                            data:{user_token:user_token,activity_id:activity_id,device_id:device_id},
+                            dataType:'json',
                             success:function(data){
-                                if(data==1){
-                                    window.location.href='commit.html';
-                                }else if(data==-1){
-                                    $("#info").html('<div class="alert alert-danger col-xs-10 col-xs-offset-1"><h4>抱歉，现在不是抽奖时间。</h4></div>');
-                                    setTimeout(function(){$("#info").css({display:"none"})},1000);
+                                if (data.code == 1) {
+                                    var luckDrawResultUrl = <?='"'.\yii\helpers\Url::to(['wc-site/luck-draw-result']).'"'?>;
+                                    res_user_token = data.message.user_token;
+                                    res_activity_id = data.message.activity_id;
+                                    res_device_id = data.message.device_id;
+                                    var params = "?user_token=" + res_user_token;
+                                    window.location.href = luckDrawResultUrl + params;
                                 }else{
-                                    $("#info").html('<div class="alert alert-danger col-xs-10 col-xs-offset-1"><h4>很遗憾, 您没有摇到奖品, 再试一次吧?</h4></div>');
+                                    $("#info").html('<div class="alert alert-danger col-xs-10 col-xs-offset-1"><h4>' + data.message + '</h4></div>');
                                     setTimeout(function(){$("#info").css({display:"none"})},1000);
                                 }
                             }

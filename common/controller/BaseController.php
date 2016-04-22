@@ -41,7 +41,7 @@ class BaseController extends Controller{
         $obj = new \stdClass();
         $obj->code = $code;
         $obj->message = $message;
-        header('Content-type: text/html; charset=utf8');
+        header('Content-type: text/json; charset=utf8');
         echo Json::encode($obj);
         exit;
     }

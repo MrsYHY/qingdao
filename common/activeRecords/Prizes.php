@@ -80,4 +80,12 @@ class Prizes extends \common\activeRecords\BaseActiveRecord
         }
         return $ra;
     }
+
+    public static function getByActivityId($activityId){
+        $prizes = Prizes::find()->where(['activity_id'=>$activityId])->all();
+        if (empty($prizes)) {
+            return false;
+        }
+        return $prizes;
+    }
 }
