@@ -35,7 +35,7 @@ class WcSiteController extends BaseController{
         $this->layout = 'weixin';
         $wechatForm = new WeChatForm();
         $wechatForm->setScenario('luck_draw_page');
-        if ($wechatForm->submit()) {
+        if ($wechatForm->submitByApi()) {
             if (!$wechatForm->validate()) {
 
             }
@@ -55,7 +55,7 @@ class WcSiteController extends BaseController{
         $wechat = new WeChatForm();
         $wechat->setScenario('luck_draw_request');
 
-        if ( $wechat->submit() ){
+        if ( $wechat->submitByApi() ){
             if ( $wechat->validate() ){
                $service->luckDraw( $wechat );
             } else {

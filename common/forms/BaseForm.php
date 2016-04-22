@@ -26,7 +26,21 @@ class BaseForm extends Model{
         if(empty($request)){
             $request = Yii::$app->request->get($name,$defaultValue);
         }
+        if (empty($request)) {
+            return false;
+        }
         return $this->load($request);
+    }
+
+    public function submitByApi($name = null, $defaultValue = null){
+        $request = Yii::$app->request->post($name,$defaultValue);
+        if(empty($request)){
+            $request = Yii::$app->request->get($name,$defaultValue);
+        }
+        if (empty($request)) {
+            return false;
+        }
+        return $this->load($request,'');
     }
 
 
