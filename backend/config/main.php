@@ -23,11 +23,25 @@ return [
         'controller'=>['wc-site'],
     ],
     'components' => [
+        'mp_wechat' => [
+            'class' => 'callmez\wechat\sdk\MpWechat',
+            'appId' => SystemConfig::WECHAT_APP_ID,
+            'appSecret' => SystemConfig::WECHAT_APP_SECRET,
+            'token' => SystemConfig::WECHAT_TOKEN,
+            'encodingAesKey' => SystemConfig::WECHAT_ENCODINGAESKEY,
+        ],
+        'rewrite_mp_wechat' => [
+            'class' => 'common\rewritingDependency\ReWrite_MpWechat',
+            'appId' => SystemConfig::WECHAT_APP_ID,
+            'appSecret' => SystemConfig::WECHAT_APP_SECRET,
+            'token' => SystemConfig::WECHAT_TOKEN,
+            'encodingAesKey' => SystemConfig::WECHAT_ENCODINGAESKEY,
+        ],
         'wechat' => [
             'class' => 'callmez\wechat\sdk\Wechat',
-            'appId' => '微信公众平台中的appid',
-            'appSecret' => '微信公众平台中的secret',
-            'token' => '微信服务器对接您的服务器验证token'
+            'appId' => SystemConfig::WECHAT_APP_ID,
+            'appSecret' => SystemConfig::WECHAT_APP_SECRET,
+            'token' => SystemConfig::WECHAT_TOKEN,
         ],
         /*//多公众号使用方式
         $wechat = Yii::createObject([

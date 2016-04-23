@@ -14,8 +14,9 @@ use common\activeRecords\Activitys;
 use common\activeRecords\Devices;
 use common\activeRecords\Prizes;
 use common\services\BaseService;
+use yii\helpers\ArrayHelper;
 
-class WcSiteService extends BaseService{
+class WcSiteService extends WeChatService{
 
     static $PRIZE_FOR_IMAGE = ['QINGDAO'=>'qingdao','IWATCH'=>'watch'];
 
@@ -45,6 +46,7 @@ class WcSiteService extends BaseService{
         if (empty($prizes)) {
             $this->failByJson('本次活动还没有设置奖品哦！');
         }
+
 
         //抽奖算法开始
         $k = rand(1,15);

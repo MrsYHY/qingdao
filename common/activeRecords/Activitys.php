@@ -70,7 +70,8 @@ class Activitys extends \common\activeRecords\BaseActiveRecord
      * 判断活动是否还在进行
      */
     public static function getByIdAndTime($pk){
-        $ra = Activitys::find()->where(['id'=>$pk])->where('start_time<="'.date("Y-m-d H:i:s",time()).'"')->one();
+        $now = date("Y-m-d H:i:s",time());
+        $ra = Activitys::find()->where(['id'=>$pk])->where('start_time<='.$now)->where('end_time>='.$now)->one();
         if(empty($ra)){
             return false;
         }

@@ -86,6 +86,7 @@ $musicPath = $this->getAssetManager()->publish('@wechat/music/')[1];
                     myAudioWin.play();//播放
                     setTimeout(function(){
                         $.ajax({
+                            async:true,
                             url:<?='"'.Yii::$app->urlManager->createAbsoluteUrl(['wc-site/luck-draw']).'"'?>,
                             type:"POST",
                             data:{user_token:user_token,activity_id:activity_id,device_id:device_id},
@@ -104,8 +105,6 @@ $musicPath = $this->getAssetManager()->publish('@wechat/music/')[1];
                                 }
                             }
                         })
-
-
                     },500)
                 }
 
