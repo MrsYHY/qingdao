@@ -69,6 +69,7 @@ $musicPath = $this->getAssetManager()->publish('@wechat/music/')[1];
             // 获取当前时间
             var curTime = new Date().getTime();
             var diffTime = curTime -last_update;
+            var canRequest = true;
             // 固定时间段
             if (diffTime > 100) {
                 last_update = curTime;
@@ -79,33 +80,33 @@ $musicPath = $this->getAssetManager()->publish('@wechat/music/')[1];
 
                 var speed = Math.abs(x + y + z - last_x - last_y - last_z) / diffTime * 30000;
 
-                if (speed > SHAKE_THRESHOLD) {
+                if (speed > SHAKE_THRESHOLD && canRequest == true) {
+                    canRequest = false;
                     // TODO:在此处可以实现摇一摇之后所要进行的数据逻辑操作
                     $("#info").html('');
                     shake('shake');
                     myAudioWin.play();//播放
-                    setTimeout(function(){
-                        $.ajax({
-                            async:true,
-                            url:<?='"'.Yii::$app->urlManager->createAbsoluteUrl(['wc-site/luck-draw']).'"'?>,
-                            type:"POST",
-                            data:{user_token:user_token,activity_id:activity_id,device_id:device_id},
-                            dataType:'json',
-                            success:function(data){
-                                if (data.code == 1) {
-                                    var luckDrawResultUrl = <?='"'.Yii::$app->urlManager->createAbsoluteUrl(['wc-site/luck-draw-result']).'"'?>;
-                                    res_user_token = data.message.user_token;
-                                    res_activity_id = data.message.activity_id;
-                                    res_device_id = data.message.device_id;
-                                    var params = "?user_token=" + res_user_token;
-                                    window.location.href = luckDrawResultUrl + params;
-                                }else{
-                                    $("#info").html('<div class="alert alert-danger col-xs-10 col-xs-offset-1"><h4>' + data.message + '</h4></div>');
-                                    setTimeout(function(){$("#info").css({display:"none"})},1000);
-                                }
+                    $.ajax({
+                        async:true,
+                        url:<?='"'.Yii::$app->urlManager->createAbsoluteUrl(['wc-site/luck-draw']).'"'?>,
+                        type:"POST",
+                        data:{user_token:user_token,activity_id:activity_id,device_id:device_id},
+                        dataType:'json',
+                        success:function(data){
+                            if (data.code == 1) {
+                                var luckDrawResultUrl = <?='"'.Yii::$app->urlManager->createAbsoluteUrl(['wc-site/luck-draw-result']).'"'?>;
+                                res_user_token = data.message.user_token;
+                                res_activity_id = data.message.activity_id;
+                                res_device_id = data.message.device_id;
+                                var params = "?user_token=" + res_user_token;
+                                window.location.href = luckDrawResultUrl + params;
+                            }else{
+                                $("#info").html('<div class="alert alert-danger col-xs-10 col-xs-offset-1"><h4>' + data.message + '</h4></div>');
+                                setTimeout(function(){$("#info").css({display:"none"})},1000);
                             }
-                        })
-                    },500)
+                            canRequest = true;
+                        }
+                    })
                 }
 
                 last_x = x;
