@@ -14,14 +14,20 @@ $musicPath = $this->getAssetManager()->publish('@wechat/music/')[1];
     <div id="info" class="row" style="margin-top:40px;height: 50px">
         <div class="alert alert-danger col-xs-10 col-xs-offset-1">
             <h4>
-                <?php
-                    if (isset($err)){
-                        echo $err;
-                    }else{
-                        echo "已成功兑奖";
-                    }
-                ?>
+
             </h4>
         </div>
     </div>
-<?php //没有中奖
+<?php //没有中奖?>
+
+<?php
+
+?>
+<script>
+    var info = "<?php if (isset($err)){
+    echo $err;
+}else{
+    echo "已成功兑奖";
+}?>";
+    alert(info,"温馨提示");
+</script>
