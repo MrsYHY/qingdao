@@ -11,6 +11,7 @@ namespace backend\services;
 
 use backend\forms\DeviceForm;
 use callmez\wechat\sdk\mp\ShakeAround;
+use common\activeRecords\Devices;
 use common\activeRecords\WechatData;
 use common\rewritingDependency\ReWrite_ShakeAround;
 use common\services\BaseService;
@@ -142,6 +143,20 @@ class DevicesService extends BaseService{
             return false;
         }
         return $result;
+    }
+
+    public function createDevice(DeviceForm $deviceForm){
+        $device = new Devices();
+        $device->sale_name = $deviceForm->sale_name;
+        $device->device_keyword = $deviceForm->device_keyword;
+        $device->user_id = 0;
+        $device->shake_num = 0;
+        $device->device_name = $deviceForm->device_name;
+        if ($device->save()) {
+            return $device->id;
+        }
+        return false;
+
     }
 
 } 

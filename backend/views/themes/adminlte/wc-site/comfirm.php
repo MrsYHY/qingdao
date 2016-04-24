@@ -27,7 +27,7 @@ $musicPath = $this->getAssetManager()->publish('@wechat/music/')[1];
     var info = "<?php if (isset($err)){
     echo $err;
 }else{
-    echo "已成功兑奖";
+    echo "您已成功兑奖,兑奖奖品为".$prizeName;
 }?>";
     alert(info,"温馨提示");
 </script>

@@ -31,6 +31,7 @@ class StatisticsController extends BaseController{
     public function actionLuckDrawList(){
 
         $luckDrawForm = new LuckDrawResultForm();
+        $page = $this->request('page');
         if ($luckDrawForm->submit()) {
             if ($luckDrawForm->validate()) {
                 $service = $this->getService();

@@ -1,6 +1,6 @@
 <?php
 
-use backend\widgets\adminLte\GridView;
+use kartik\grid\GridView;
 use yii\helpers\Html;
 use backend\widgets\metronic\ActiveForm;
 use \common\activeRecords\LuckDrawResult;
@@ -16,7 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="box">
     <div class="box-header">
         <h3 class="box-title"><?= $this->title?></h3>
-        <?php $form = ActiveForm::begin()?>
+        <?php $form = ActiveForm::begin(['method'=>'get'])?>
         <div class="row">
             <div class="col-md-6">
                 <?= $form->field($luckDrawForm,'activity_id')->dropDownList([''=>'全部']+\yii\helpers\ArrayHelper::map(\common\activeRecords\Activitys::find()->all(),'id','title'));?>
@@ -28,6 +28,9 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="row">
             <div class="col-md-6">
             <?= $form->field($luckDrawForm,'is_award')->dropDownList([''=>'全部',LuckDrawResult::AWARD=>'已兑奖',LuckDrawResult::NOT_AWARD=>'未中奖'])?>
+            </div>
+            <div class="col-md-6">
+                <?= $form->field($luckDrawForm,'device_id')->dropDownList([''=>'全部']+\yii\helpers\ArrayHelper::map(\common\activeRecords\Devices::find()->all(),'id','device_keyword'));?>
             </div>
         </div>
         <div class="row">
@@ -48,6 +51,8 @@ $this->params['breadcrumbs'][] = $this->title;
                     <?php $pajax = \backend\widgets\Pjax::begin()?>
                     <?= GridView::widget([
                         'dataProvider' => $dataProvider,
+                        'exportConfig'=>'EXCEL',
+//                        'export'=>'excel',
                         'columns' => [
                             'id',
                             [
@@ -79,7 +84,15 @@ $this->params['breadcrumbs'][] = $this->title;
                             'created_at',
                             [
                                 'attribute'=>'is_award',
-                                'value'=>function($model){return $model->is_award == LuckDrawResult::AWARD ? '已兑奖':'未兑奖';}
+                                'value'=>function($model){
+                                        if($model->result == LuckDrawResult::NOT_ZHONG){return '';}
+                                        if($model->is_award == LuckDrawResult::AWARD){
+                                            return '已兑奖';
+                                        }elseif($model->is_award == LuckDrawResult::NOT_AWARD){
+                                            return '未兑奖';
+                                        }
+                                        return '';
+                                        }
                             ],
                             'win_code'
                         ],

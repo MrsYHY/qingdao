@@ -21,6 +21,13 @@ class DeviceForm extends BaseForm{
     public $pageIconUrl;//图标示例
     public $pageIconUpload;
 
+    public $sale_name;
+    public $device_keyword;
+    public $user_id;
+    public $shake_num;
+    public $device_name;
+    public $device_id;
+
 
     /**
      * @inheritdoc
@@ -28,6 +35,8 @@ class DeviceForm extends BaseForm{
     public function rules()
     {
         return [
+            [['sale_name','user_id','shake_num','device_id'],'safe'],
+            [['device_keyword','device_name'],'required','on'=>'createDevice'],
             [['pageIconUpload'],'file'],
             [['pageComment','pageIconUrl'],'safe'],
             [['pageTitle','pageDescription','pagePageUrl'], 'required','on'=>['pageCreate','pageUpdate']],
@@ -44,7 +53,11 @@ class DeviceForm extends BaseForm{
             'pageDescription'=>'页面描述',
             'pagePageUrl'=>'页面链接',
             'pageIconUrl'=>'图标链接',
-            'pageComment'=>'数据示例'
+            'pageComment'=>'数据示例',
+            'sale_name'=>'促销员',
+            'shake_num'=>'摇一摇次数',
+            'device_keyword'=>'设备标识',
+            'device_name'=>'设备名称'
         ];
     }
 

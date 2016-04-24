@@ -61,6 +61,24 @@ class DevicesController extends BaseController{
         return $this->redirect(['list']);
     }
 
+    public function actionCreate(){
+        $deviceForm = new DeviceForm();
+        $deviceForm->setScenario('createDevice');
+
+        if ($deviceForm->submit()) {
+            if ($deviceForm->validate()) {
+                $service = $this->getService();
+                $result = $service->createDevice($deviceForm);
+                if ($result === false) {
+                    $deviceForm->addErrors($service->getErrors());
+                }else {
+                    $this->redirect(['view','id'=>$result]);
+                }
+            }
+        }
+        return $this->render('device_create',compact('deviceForm'));
+    }
+
     public function actionUpdate($id){
         $model = Devices::findByPk($id);
         if( empty($model) ){
@@ -69,7 +87,7 @@ class DevicesController extends BaseController{
         if ($model->load(\Yii::$app->request->post())) {
             if($model->save()){
                 \Yii::$app->cache->flush();
-                return $this->redirect(['list']);
+                return $this->redirect(['view','id'=>$model->id]);
             }else {
                 throw new DbException("更新此记录失败");
             }
@@ -79,6 +97,15 @@ class DevicesController extends BaseController{
             ]);
         }
     }
+
+    public function actionView($id){
+        $model = Devices::findByPk($id);
+        if( empty($model) ){
+            throw new NotFoundHttpException("找不到设备：{$id}对应的记录");
+        }
+        return $this->render('device_view',compact('model'));
+    }
+
 
     /**
      * 摇一摇页面添加

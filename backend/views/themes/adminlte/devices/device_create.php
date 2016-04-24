@@ -5,7 +5,7 @@ use dosamigos\datepicker\DatePicker;
 /* @var $this yii\web\View */
 /* @var $model common\models\AuthItem */
 
-$this->title = '修改设备';
+$this->title = '添加设备';
 $this->params['breadcrumbs'][] ='活动管理';
 $this->params['breadcrumbs'][] = $this->title;
 //$this->params['breadcrumbs'][] = '修改';
@@ -17,14 +17,14 @@ $this->params['breadcrumbs'][] = $this->title;
                 <?php $form = \backend\widgets\metronic\ActiveForm::begin(['options'=>['class'=>'form-horizontal']])?>
                 <!-- BEGIN FORM-->
                 <div class="form-body">
-                    <?= $form->field($model, 'device_name') ?>
-                    <?= $form->field($model, 'device_keyword')?>
-                    <?= $form->field($model, 'sale_name')?>
+                    <?= $form->field($deviceForm, 'device_name') ?>
+                    <?= $form->field($deviceForm, 'device_keyword')?>
+                    <?= $form->field($deviceForm, 'sale_name')?>
                 </div>
                 <div class="form-actions">
                     <div class="row">
                         <div class="col-md-offset-3 col-md-9">
-                            <button type="submit" class="btn green">修改</button>
+                            <button type="submit" class="btn green">添加</button>
                         </div>
                     </div>
                 </div>

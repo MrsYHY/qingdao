@@ -83,22 +83,22 @@ class LuckDrawResult extends \common\activeRecords\BaseActiveRecord
     public static function search($search){
         $query = self::find();
         if (isset($search['activity_id']) && !empty($search['activity_id'])) {
-            $query = $query->where(['activity_id'=>$search['activity_id']]);
+            $query = $query->andWhere(['activity_id'=>$search['activity_id']]);
         }
-        if (isset($search ['result']) && !empty($search['result'])) {
-            $query = $query->where(['result'=>$search['result']]);
-        }
-        if (isset($search ['result']) && !empty($search['result'])) {
-            $query = $query->where(['result'=>$search['result']]);
+        if (isset($search ['result']) && $search['result'] !== null && $search['result'] !== '') {
+            $query = $query->andWhere(['result'=>$search['result']]);
         }
         if (isset($search ['start_created_at']) && !empty($search['start_created_at'])) {
-            $query = $query->where('created_at>="'.$search['start_created_at']);
+            $query = $query->andWhere('created_at>="'.$search['start_created_at']);
         }
         if (isset($search ['end_created_at']) && !empty($search['end_created_at'])) {
-            $query = $query->where('created_at<="'.$search['end_created_at']);
+            $query = $query->andWhere('created_at<="'.$search['end_created_at']);
         }
-        if (isset($search ['is_award']) && !empty($search['is_award'])) {
-            $query = $query->where(['result'=>$search['is_award']]);
+        if (isset($search ['is_award']) && $search['is_award'] !== null && $search['is_award'] !== '') {
+            $query = $query->andWhere(['is_award'=>$search['is_award']]);
+        }
+        if (isset($search['device_id']) && !empty($search['device_id'])) {
+            $query = $query->andWhere(['device_id'=>$search['device_id']]);
         }
 
         $dataProvider = new ActiveDataProvider([

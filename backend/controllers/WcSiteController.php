@@ -43,7 +43,7 @@ class WcSiteController extends BaseController{
         $user->role = TerminalUser::ROLE_XIAOFEI;
         $user->draw_luck_total = SystemConfig::LUCK_DRAW_TOTAL;
         $user->draw_luck_num = 0;
-        $user->sign_in_num = 0;
+        $user->sign_in_num = -1;
         $user->last_luck_draw_time = time()-24*60*60;
         $user->save();
 
@@ -135,11 +135,12 @@ class WcSiteController extends BaseController{
             return $this->render('comfirm',compact('err'));
         }
         $result = $service->comfirm($param);
-        if ($result !== true){
+        if (!is_object($result)){
             $err = $result;
             return $this->render('comfirm',compact('err'));
         }
-        return $this->render('comfirm',compact('err'));
+        $prizeName = Prizes::findByPk($result->prize_id)->name;
+        return $this->render('comfirm',compact('err','prizeName'));
     }
 
     public function actionQrCode(){

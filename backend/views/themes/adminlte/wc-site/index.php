@@ -11,21 +11,11 @@ $musicPath = $this->getAssetManager()->publish('@wechat/music/')[1];
 
 ?>
 <img src="<?=$imgPath?>/activity_home.jpg" width="100%" height="100%" style="position:absolute; left:0; top: 0; z-index: -1;">
+<img src="<?=$imgPath?>/shake_home.png" width="100%" height="100%" style="position:absolute; left:0; top: 0; z-index: -1;">
+
 <div id="info" class="row" style="margin-top:20px;height: 50px">
 
 </div>
-<div class="row" style="text-align: center; padding-top: 40%;z-index: 999">
-    <div class="span1">
-        &nbsp;
-    </div>
-    <div class="span10">
-        <img id='shake' style="width: 40%;" src="<?=$imgPath?>/rock.png">
-    </div>
-    <div class="span1">
-        &nbsp;
-    </div>
-</div>
-
 
 <div class="row" style="text-align: center;   position: absolute; bottom: 17%; margin-bottom: 10px; left: 50%; margin-left: -100px; z-index: 998;">
     <div class="span1">
@@ -90,7 +80,6 @@ $musicPath = $this->getAssetManager()->publish('@wechat/music/')[1];
                     canRequest = false;
                     // TODO:在此处可以实现摇一摇之后所要进行的数据逻辑操作
                     $("#info").html('');
-                    shake('shake');
                     myAudioWin.play();//播放
                     $.ajax({
                         async:true,
@@ -108,6 +97,7 @@ $musicPath = $this->getAssetManager()->publish('@wechat/music/')[1];
                                 var params = "?user_token=" + res_user_token + "&result=" + res_result;
                                 window.location.href = luckDrawResultUrl + params;
                             }else{
+//                                alert(data.message,'温馨提示');
                                 $("#info").html('<div class="alert alert-danger col-xs-10 col-xs-offset-1"><h4>' + data.message + '</h4></div>');
 //                                $("#info").css({display:"block"});
                                 setTimeout(function(){$("#info").html('')},1000);
@@ -121,19 +111,6 @@ $musicPath = $this->getAssetManager()->publish('@wechat/music/')[1];
                 last_z = z;
             }
         }
-
-
-        function shake(o){
-            var $panel = $("#"+o);
-            box_left = ($(window).width() -  $panel.width()) / 2;
-            $panel.css({'left': box_left,'position':'absolute'});
-            for(var i=1; 4>=i; i++){
-                $panel.animate({left:box_left-(40-10*i)},50);
-                $panel.animate({left:box_left+2*(40-10*i)},50);
-            }
-        }
-
-
     });
 </script>
 

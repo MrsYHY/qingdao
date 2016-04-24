@@ -25,13 +25,15 @@ class LuckDrawResultForm extends BaseForm{
     public $end_created_at;
 
     public $start_created_at;
+
+    public $device_id;
     /**
      * @inheritdoc
      */
     public function rules()
     {
         return [
-            [['id','activity_id','result','user_id','prize_id','prize_level','created_at','is_award','win_code','end_created_at','end_created_at'],'safe'],
+            [['device_id','id','activity_id','result','user_id','prize_id','prize_level','created_at','is_award','win_code','end_created_at','end_created_at'],'safe'],
         ];
     }
 
@@ -50,6 +52,7 @@ class LuckDrawResultForm extends BaseForm{
             'created_at'=>'摇奖时间',
             'is_award'=>'是否兑奖',
             'win_code'=>'兑奖码',
+            'device_id'=>'设备'
         ];
     }
 

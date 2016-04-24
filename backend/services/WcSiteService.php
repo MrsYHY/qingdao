@@ -61,7 +61,7 @@ class WcSiteService extends WeChatService{
             $this->failByJson('活动已经结束啦！');
         }
 
-        //判断设备id是否合法
+              //判断设备id是否合法
         $device_id = $weChatForm->device_id;
         $device = Devices::fingByDeviceId($device_id);
         if (empty($device)) {
@@ -94,6 +94,7 @@ class WcSiteService extends WeChatService{
         if ($k == -1){
             $user->last_luck_draw_time = time();
             $user->draw_luck_num = $user->draw_luck_num +1;
+            $user->sign_in_num = 0;
             if (!$user->save()){
 
             }
@@ -140,6 +141,7 @@ class WcSiteService extends WeChatService{
                 }
                 $user->draw_luck_num = $user->draw_luck_num + 1;;
                 $user->last_luck_draw_time = time();
+                $user->sign_in_num = 0;
                 if (!$user->save()){
                     throw new DbException('保存您的信息失败了',5);
                 }
@@ -183,7 +185,7 @@ class WcSiteService extends WeChatService{
         }
         $luckDrawResult->is_award = LuckDrawResult::AWARD;
         if ($luckDrawResult->save()){
-            return true;
+            return $luckDrawResult;
         }
         return '更新中奖纪录失败!';
     }

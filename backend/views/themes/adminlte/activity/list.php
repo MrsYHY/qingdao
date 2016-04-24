@@ -38,6 +38,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             'title',
                             'start_time',
                             'end_time',
+                            ['attribute'=>'shakeNum','label'=>'摇一摇总数','value'=>function($model){return \common\activeRecords\LuckDrawResult::find()->where(['activity_id'=>$model->id])->count();}],
                             ['class' => 'yii\grid\ActionColumn','header'=>'操作'],
                         ],
                     ]); ?>

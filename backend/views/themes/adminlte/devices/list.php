@@ -13,13 +13,13 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="box">
     <div class="box-header">
         <h3 class="box-title"><?= $this->title?></h3>
-<!--        <div class="box-tools">-->
-<!--            <div class="input-group input-group-sm" >-->
-<!--                <a class="btn btn-circle btn-default btn-sm" href="--><?//= \yii\helpers\Url::toRoute('create')?><!--">-->
-<!--                    <i class="fa fa-plus"></i><span class="hidden-480">添加活动</span>-->
-<!--                </a>-->
-<!--            </div>-->
-<!--        </div>-->
+        <div class="box-tools">
+            <div class="input-group input-group-sm" >
+                <a class="btn btn-circle btn-default btn-sm" href="<?= \yii\helpers\Url::toRoute('create')?>">
+                    <i class="fa fa-plus"></i><span class="hidden-480">添加设备</span>
+                </a>
+            </div>
+        </div>
     </div>
     <div class="box-body">
         <div id="example2_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
@@ -36,9 +36,9 @@ $this->params['breadcrumbs'][] = $this->title;
                             'id',
                             'device_name',
                             'device_keyword',
-                            'user_id',
+                            'sale_name',
                             'shake_num',
-                            ['class' => 'yii\grid\ActionColumn','header'=>'操作','template' => '{update} {delete}'],
+                            ['class' => 'yii\grid\ActionColumn','header'=>'操作','template' => '{view} {update} {delete}'],
                         ],
                     ]); ?>
                     <?php $pajax->end();?>

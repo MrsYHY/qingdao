@@ -21,13 +21,14 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="col-md-12">
     <div class="portlet light">
         <div class="portlet-body form">
-            <?php $form = ActiveForm::begin()?>
+            <?php $form = ActiveForm::begin(['method'=>'get'])?>
             <?php $form->errorSummary($luckDrawForm); ?>
             <!-- BEGIN FORM-->
             <div class="form-body">
                 <div class="row">
                     <?= $form->field($luckDrawForm,'activity_id')->dropDownList([''=>'全部']+\yii\helpers\ArrayHelper::map(\common\activeRecords\Activitys::find()->all(),'id','title'));?>
                 </div>
+                <div class="row"><?= $form->field($luckDrawForm,'device_id')->dropDownList([''=>'全部']+\yii\helpers\ArrayHelper::map(\common\activeRecords\Devices::find()->all(),'id','device_keyword'));?></div>
                 <div class="row"><?= $form->field($luckDrawForm,'result')->dropDownList([''=>'全部',LuckDrawResult::ZHONG=>'中奖',LuckDrawResult::NOT_ZHONG=>'没中奖'])?></div>
 <!--                <div class="row">--><?php
 //                    echo $form->field($luckDrawForm,'start_created_at')->datetimePicker();

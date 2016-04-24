@@ -130,6 +130,7 @@ $tpl_img_url = $this->getAssetManager()->publish('@adminlte/dist/img/')[1];
                         <li class="active"><?= $breadcrumb?></li>
                     <?php endforeach;?>
                 </ol>
+                <?php if(strtolower(Yii::$app->request->url) !== '/site/index.html'){?>
                 <div class="actions" style="margin-top: 10px;">
                     <a href="javascript:history.go(-1);" class="btn btn-default btn-circle">
                         <i class="fa fa-angle-left"></i>
@@ -137,6 +138,7 @@ $tpl_img_url = $this->getAssetManager()->publish('@adminlte/dist/img/')[1];
                                         返回 </span>
                     </a>
                 </div>
+                <?php }?>
             </div>
         </section>
 
