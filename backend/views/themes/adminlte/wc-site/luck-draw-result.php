@@ -25,7 +25,7 @@ if(!isset($result)||$result === -1){
     <img width="100%" height="100%" style="position:absolute;left:0;top:0;text-align: center;z-index: 998;" src="<?=$imgPath."/no_win_".$first?>.png">
 <?php }else{?>
     <img width="100%" height="100%" style="position:absolute;left:0;top:0;text-align: center;z-index: 997;" src="<?=$imgPath."/win"?>.png">
-    <div style='width: 180px;height: 180px;margin: 20% auto 0;background-image: url("<?=$qrPath?>")'>
+    <div style='width: 180px;height: 180px;margin: 10% auto 0;background-image: url("<?=$qrPath?>")'>
 <!--        <img width="120px" height="120px" style="position:absolute;left:25%;top:25%;text-align: center;z-index: 998;" src="--><?//=$qrPath?><!--"/>-->
     </div>
     <img width="100%" height="100%" style="position:absolute;left:0;top:0;text-align: center;z-index: 998;" src="<?=$imgPath."/".$resultKeyword?>.png">
