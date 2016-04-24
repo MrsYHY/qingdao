@@ -17,6 +17,7 @@ $this->title = Yii::t('backend','activity list');
 $this->params['breadcrumbs'][] = $this->title;
 
 ?>
+<div class="row">
 <div class="activity-create">
 
     <?php $form = ActiveForm::begin(); ?>
@@ -52,3 +53,4 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php ActiveForm::end(); ?>
 
 </div><!-- activity-create -->
+</div>

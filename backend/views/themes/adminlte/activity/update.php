@@ -10,6 +10,7 @@ $this->params['breadcrumbs'][] ='活动管理';
 $this->params['breadcrumbs'][] = $this->title;
 //$this->params['breadcrumbs'][] = '修改';
 ?>
+<div class="row">
 <div class="col-md-12">
     <div class="portlet light">
         <div class="portlet-body form">
@@ -51,4 +52,5 @@ $this->params['breadcrumbs'][] = $this->title;
             <?php $form->end()?>
         </div>
     </div>
+</div>
 </div>

@@ -10,6 +10,7 @@ use yii\helpers\Html;
 $this->title = Yii::t('backend','activity list');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
+<div class="row">
 <div class="box">
     <div class="box-header">
         <h3 class="box-title"><?= $this->title?></h3>
@@ -45,4 +46,5 @@ $this->params['breadcrumbs'][] = $this->title;
             </div>
         </div>
     </div>
+</div>
 </div>

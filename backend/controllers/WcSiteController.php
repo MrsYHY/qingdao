@@ -99,13 +99,17 @@ class WcSiteController extends BaseController{
                 $noValidForUser = true;
             }else{
                 $luckResult = LuckDrawResult::getNotAwardByUserId($user->id);
-                $prize = Prizes::find($luckResult->prize_id)->one();
-                if( empty($luckResult) || empty($prize)){
+                if(empty($luckResult)){
                     $result = -1;
                 }else{
-                    $resultKeyword = WcSiteService::$PRIZE_FOR_IMAGE[$prize->keyword];
-                    $result = $luckResult->prize_level;//中奖等级
-                    $qrPath = LuckDrawResult::generateQrCode($luckResult,$params['user_token']);
+                    $prize = Prizes::find($luckResult->prize_id)->one();
+                    if(empty($prize)){
+                        $result = -1;
+                    }else{
+                        $resultKeyword = WcSiteService::$PRIZE_FOR_IMAGE[$prize->keyword];
+                        $result = $luckResult->prize_level;//中奖等级
+                        $qrPath = LuckDrawResult::generateQrCode($luckResult,$params['user_token']);
+                    }
                 }
             }
         }
