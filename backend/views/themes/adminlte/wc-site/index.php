@@ -108,8 +108,8 @@ $musicPath = $this->getAssetManager()->publish('@wechat/music/')[1];
                                 window.location.href = luckDrawResultUrl + params;
                             }else{
                                 $("#info").html('<div class="alert alert-danger col-xs-10 col-xs-offset-1"><h4>' + data.message + '</h4></div>');
-                                $("#info").css({display:"block"});
-                                setTimeout(function(){$("#info").css({display:"none"})},1000);
+//                                $("#info").css({display:"block"});
+                                setTimeout(function(){$("#info").html('')},1000);
                             }
                             canRequest = true;
                         }
