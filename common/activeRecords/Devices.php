@@ -51,7 +51,18 @@ class Devices extends \common\activeRecords\BaseActiveRecord
     }
 
     public static function findByPk($pk){
-        $ra = Activitys::find()->where(['id'=>$pk])->one();
+        $ra = Devices::find()->where(['id'=>$pk])->one();
+        if(empty($ra)){
+            return false;
+        }
+        return $ra;
+    }
+
+    /**
+     * 通过微信提供的设备id
+     */
+    public static function fingByDeviceId($deviceId){
+        $ra = Devices::find()->where(['device_keyword'=>$deviceId])->one();
         if(empty($ra)){
             return false;
         }

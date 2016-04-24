@@ -18,4 +18,11 @@ class Tool {
         return $str;
     }
 
+
+    public static function randAbc($length=""){//返回随机字符串
+        $str="abcdefghijklmnopqrstuvwxyz0123456789";
+        $str = str_shuffle($str);
+        return substr($str,0,$length);
+    }
+
 }

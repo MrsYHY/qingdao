@@ -14,6 +14,7 @@ use backend\services\WcSiteService;
 use common\activeRecords\LuckDrawResult;
 use common\activeRecords\Prizes;
 use common\activeRecords\TerminalUser;
+use common\components\Tool;
 use common\controller\BaseController;
 
 class WcSiteController extends BaseController{
@@ -35,11 +36,23 @@ class WcSiteController extends BaseController{
         $this->layout = 'weixin';
         $wechatForm = new WeChatForm();
         $wechatForm->setScenario('luck_draw_page');
+
+        $user = new TerminalUser();
+        $user->terminal_user_token = Tool::randAbc(10).date("YmdHis",time());
+        $user->role = TerminalUser::ROLE_XIAOFEI;
+        $user->draw_luck_total = 0;
+        $user->draw_luck_num = 1;
+        $user->sign_in_num = 0;
+        $user->last_luck_draw_time = time()-24*60*60;
+        $user->save();
+
+        $wechatForm->user_token = $user->terminal_user_token;
         if ($wechatForm->submitByApi()) {
             if (!$wechatForm->validate()) {
 
             }
         }
+
         return $this->render('index',compact('wechatForm'));
     }
 
@@ -86,18 +99,37 @@ class WcSiteController extends BaseController{
                 $noValidForUser = true;
             }else{
                 $luckResult = LuckDrawResult::getNotAwardByUserId($user->id);
-                if( empty($luckResult) ){
+                $prize = Prizes::find($luckResult->prize_id)->one();
+                if( empty($luckResult) || empty($prize)){
                     $result = -1;
                 }else{
-                    $prize = Prizes::find($luckResult->prize_id)->one();
                     $resultKeyword = WcSiteService::$PRIZE_FOR_IMAGE[$prize->keyword];
                     $result = $luckResult->prize_level;//中奖等级
+                    $qrPath = LuckDrawResult::generateQrCode($luckResult,$params['user_token']);
                 }
             }
         }
 
-        return $this->render('luck-draw-result',compact('noValidForUser','result','resultKeyword'));
+        return $this->render('luck-draw-result',compact('noValidForUser','result','resultKeyword','qrPath'));
 
+    }
+
+    /**
+     * 兑奖
+     */
+    public function actionComfirm(){
+        $param = $this->request();
+        $service = $this->getService();
+        if (!isset($param ['result_id']) || !isset($param ['win_code'])) {
+            $err = '参数有误';
+            return $this->render('comfirm',compact('err'));
+        }
+        $result = $service->comfirm($param);
+        if ($result !== true){
+            $err = $result;
+            return $this->render('comfirm',compact('err'));
+        }
+        return $this->render('comfirm',compact('err'));
     }
     
 

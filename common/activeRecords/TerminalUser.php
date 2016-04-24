@@ -13,9 +13,12 @@ use Yii;
  * @property integer $sign_in_num
  * @property integer $draw_luck_num
  * @property integer $draw_luck_total
+ * @property integer $last_luck_draw_time
  */
 class TerminalUser extends \common\activeRecords\BaseActiveRecord
 {
+    const ROLE_XIAOFEI = 0;//:消费者
+    const ROLE_CUXIAO  = 1;//促销员
     /**
      * @inheritdoc
      */
@@ -56,6 +59,14 @@ class TerminalUser extends \common\activeRecords\BaseActiveRecord
             return false;
         }
         return $user;
+    }
+
+    public static function findByPk($pk){
+        $ra = self::find()->where(['id'=>$pk])->one();
+        if(empty($ra)){
+            return false;
+        }
+        return $ra;
     }
 
 

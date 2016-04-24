@@ -44,6 +44,13 @@ $musicPath = $this->getAssetManager()->publish('@wechat/music/')[1];
     var device_id = <?='"'.$wechatForm->device_id.'"'?>;
     $(document).ready(function(){
         var myAudioWin = new Audio("<?=$musicPath?>/rock.mp3");
+        var localStorage = window.localStorage;
+        var keyForStorage = 'openId';//localStorage.clear(keyForStorage)
+//        alert(localStorage.getItem(keyForStorage));
+        if (localStorage.getItem(keyForStorage) == null || localStorage.getItem(keyForStorage) == undefined) {
+            localStorage.setItem(keyForStorage,user_token);
+            alert('您需要关注我们公众号才有机会摇奖哦！','温馨提醒');
+        }
 
         if (window.DeviceMotionEvent) {
             // 移动浏览器支持运动传感事件
@@ -89,8 +96,8 @@ $musicPath = $this->getAssetManager()->publish('@wechat/music/')[1];
                     $.ajax({
                         async:true,
                         url:<?='"'.Yii::$app->urlManager->createAbsoluteUrl(['wc-site/luck-draw']).'"'?>,
-                        type:"POST",
-                        data:{user_token:user_token,activity_id:activity_id,device_id:device_id},
+                        type:"GET",
+                        data:{user_token:user_token,activity_id:activity_id,device_id:device_id,openId:localStorage.getItem(keyForStorage)},
                         dataType:'json',
                         success:function(data){
                             if (data.code == 1) {
@@ -108,7 +115,6 @@ $musicPath = $this->getAssetManager()->publish('@wechat/music/')[1];
                         }
                     })
                 }
-
                 last_x = x;
                 last_y = y;
                 last_z = z;

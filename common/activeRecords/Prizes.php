@@ -88,4 +88,5 @@ class Prizes extends \common\activeRecords\BaseActiveRecord
         }
         return $prizes;
     }
+
 }

@@ -3,6 +3,7 @@ use \backend\assets\WeChatAsset;
 
 WeChatAsset::register($this);
 
+
 $this->registerAssetBundle('yii\web\JqueryAsset',\yii\web\View::POS_HEAD);
 
 ?>
