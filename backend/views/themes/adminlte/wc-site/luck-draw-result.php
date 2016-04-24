@@ -33,9 +33,12 @@ if(!isset($result)||$result === -1){
 <?php } ?>
 
 <script>
+    var result = <?php if(!isset($result)||$result === -1){echo 0;}else{echo 1;}?>;
     $(document).ready(function(){
+        if (result == 1){
         setTimeout(function(){
-            window.location.href = "<?=Yii::$app->urlManager->createAbsoluteUrl(['wc-site/qr-code','img'=>$qrPath])?>";
+            window.location.href = "<?= isset($qrPath)?Yii::$app->urlManager->createAbsoluteUrl(['wc-site/qr-code','img'=>$qrPath]):'';?>";
         },3000);
+        }
     })
 </script>
