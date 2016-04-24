@@ -22,6 +22,7 @@ if (YII_ENV_DEV) {
     ];
     $config['modules']['gridview'] = [
         'class' => 'kartik\grid\Module',
+        'downloadAction'=>'export'
     ];
     $config['as accessControl']['allow'] =  [
         'debug/default/toolbar',

@@ -1,9 +1,12 @@
 <?php
 
-use kartik\grid\GridView;
 use yii\helpers\Html;
 use backend\widgets\metronic\ActiveForm;
 use \common\activeRecords\LuckDrawResult;
+use arturoliveira\ExcelView;
+
+
+
 
 /* @var $this yii\web\View */
 /* @var $searchModel backend\components\SearchModel */
@@ -13,6 +16,7 @@ $this->title = '页面列表';
 $this->params['breadcrumbs'][] = '设备管理';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
+<div class="row">
 <div class="box">
     <div class="box-header">
         <h3 class="box-title"><?= $this->title?></h3>
@@ -48,8 +52,9 @@ $this->params['breadcrumbs'][] = $this->title;
             </div>
             <div class="row">
                 <div class="col-sm-12">
+
                     <?php $pajax = \backend\widgets\Pjax::begin()?>
-                    <?= GridView::widget([
+                    <?= \backend\widgets\metronic\GridView::widget([
                         'dataProvider' => $dataProvider,
                         'exportConfig'=>'EXCEL',
 //                        'export'=>'excel',
@@ -96,10 +101,20 @@ $this->params['breadcrumbs'][] = $this->title;
                             ],
                             'win_code'
                         ],
-                    ]); ?>
+                        'layout' => '{summary}<div class="pull-right">{export}&nbsp{fullexport}&nbsp</div><div>{items}</div>{pager}',
+                        'exportConfig' => [
+                            \kartik\grid\GridView::EXCEL => ['label' => 'Export to Excel'],
+                        ],
+                        'fullExportConfig' => [
+                            ExcelView::FULL_EXCEL => [],
+                            //ExcelView::FULL_CSV => ['label' => 'Save as CSV'],
+                            ExcelView::FULL_HTML => [],
+                        ],
+                    ]);?>
                     <?php $pajax->end();?>
                 </div>
             </div>
         </div>
     </div>
+</div>
 </div>

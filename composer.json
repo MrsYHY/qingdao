@@ -26,9 +26,9 @@
         "callmez/yii2-wechat-sdk":"dev-master",
         "2amigos/yii2-date-picker-widget": "*",
         "bacon/bacon-qr-code": "~1.0",
-        "phpoffice/phpexcel": "~1.8",
-        "kartik-v/yii2-grid": "*",
-        "kartik-v/yii2-mpdf": "dev-master"
+        "phpoffice/phpexcel":"1.8.0",
+        "kartik-v/yii2-grid":"*",
+        "arturoliveira/yii2-excelview":"1.0"
     },
     "require-dev": {
         "yiisoft/yii2-codeception": "*",
