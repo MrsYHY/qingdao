@@ -135,6 +135,12 @@ class WcSiteController extends BaseController{
         }
         return $this->render('comfirm',compact('err'));
     }
+
+    public function actionQrCode(){
+        $this->layout = 'weixin';
+        $img = $this->request('img');
+        return $this->render('qr_code',compact('img'));
+    }
     
 
 } 
