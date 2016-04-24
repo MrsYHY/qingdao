@@ -42,9 +42,12 @@ class WcSiteService extends WeChatService{
         if (empty($user_token)){
 
         }
-
-        if (date("Y-m-d",$user->last_luck_draw_time) === date('Y-m-d',time())){
-            $this->failByJson("每天只有一次摇奖机会吶！");
+        if (date("Y-m-d",$user->last_luck_draw_time) !== date('Y-m-d',time())){
+            $user->last_luck_draw_time = date('Y-m-d',time());
+            $user->draw_luck_num = 0;
+        }
+        if ($user->draw_luck_num > $user->draw_luck_total){
+            $this->failByJson("没有机会摇奖了！");
         }
 
         if ($user->draw_luck_num == 0){
@@ -90,6 +93,7 @@ class WcSiteService extends WeChatService{
         $k = $luckDraw[array_rand($luckDraw)];
         if ($k == -1){
             $user->last_luck_draw_time = time();
+            $user->draw_luck_num = $user->draw_luck_num +1;
             if (!$user->save()){
 
             }
@@ -133,8 +137,7 @@ class WcSiteService extends WeChatService{
                 if (empty($user)){
                     throw new DbException('系统找不到您的信息',3);
                 }
-                $user->draw_luck_num = $user->draw_luck_num - 1;
-                $user->draw_luck_total = $user->draw_luck_total + 1;
+                $user->draw_luck_num = $user->draw_luck_num + 1;;
                 $user->last_luck_draw_time = time();
                 if (!$user->save()){
                     throw new DbException('保存您的信息失败了',5);

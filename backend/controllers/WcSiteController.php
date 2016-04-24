@@ -9,6 +9,7 @@
 namespace backend\controllers;
 
 
+use backend\config\SystemConfig;
 use backend\forms\WeChatForm;
 use backend\services\WcSiteService;
 use common\activeRecords\LuckDrawResult;
@@ -40,8 +41,8 @@ class WcSiteController extends BaseController{
         $user = new TerminalUser();
         $user->terminal_user_token = Tool::randAbc(10).date("YmdHis",time());
         $user->role = TerminalUser::ROLE_XIAOFEI;
-        $user->draw_luck_total = 0;
-        $user->draw_luck_num = 1;
+        $user->draw_luck_total = SystemConfig::LUCK_DRAW_TOTAL;
+        $user->draw_luck_num = 0;
         $user->sign_in_num = 0;
         $user->last_luck_draw_time = time()-24*60*60;
         $user->save();
