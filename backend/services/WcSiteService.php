@@ -115,10 +115,11 @@ class WcSiteService extends WeChatService{
             $res->user_token = $user_token;
             $res->activity_id = $activity_id;
             $res->device_id = $device_id;
+            $res->result = $luckDrawResult->id;
             $this->successByJson($res);
         }
         try{
-            \Yii::$app->db->transaction(function()use($device,$user_token,$level_id,$activity_id,$k){
+            $resultId = \Yii::$app->db->transaction(function()use($device,$user_token,$level_id,$activity_id,$k){
                 $prizeId = $level_id[$k];
                 $sql = "SELECT * FROM prizes where id={$prizeId} for update";
                 $prizes = Prizes::findBySql($sql)->one();
@@ -156,6 +157,7 @@ class WcSiteService extends WeChatService{
                 if (!$luckDrawResult->save()){
                     throw new DbException('生成中奖纪录失败',4);
                 }
+                return $luckDrawResult->id;
             });
         }catch (Exception $e){
             $this->failByJson($e->getMessage());
@@ -164,6 +166,7 @@ class WcSiteService extends WeChatService{
         $res->user_token = $user_token;
         $res->activity_id = $activity_id;
         $res->device_id = $device_id;
+        $res->result = $resultId;
         $this->successByJson($res);
     }
 

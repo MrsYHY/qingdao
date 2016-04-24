@@ -104,7 +104,8 @@ $musicPath = $this->getAssetManager()->publish('@wechat/music/')[1];
                                 res_user_token = data.message.user_token;
                                 res_activity_id = data.message.activity_id;
                                 res_device_id = data.message.device_id;
-                                var params = "?user_token=" + res_user_token;
+                                res_result = data.message.result;
+                                var params = "?user_token=" + res_user_token + "&result=" + res_result;
                                 window.location.href = luckDrawResultUrl + params;
                             }else{
                                 $("#info").html('<div class="alert alert-danger col-xs-10 col-xs-offset-1"><h4>' + data.message + '</h4></div>');
