@@ -68,7 +68,7 @@ $musicPath = $this->getAssetManager()->publish('@wechat/music/')[1];
         var last_y;
         var last_z;
         var count = 0;
-
+        var canRequest = true;
         function deviceMotionHandler(eventData) {
             // 获取含重力的加速度
             var acceleration = eventData.accelerationIncludingGravity;
@@ -76,7 +76,6 @@ $musicPath = $this->getAssetManager()->publish('@wechat/music/')[1];
             // 获取当前时间
             var curTime = new Date().getTime();
             var diffTime = curTime -last_update;
-            var canRequest = true;
             // 固定时间段
             if (diffTime > 100) {
                 last_update = curTime;
