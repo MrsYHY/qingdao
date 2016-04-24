@@ -127,6 +127,7 @@ class WcSiteController extends BaseController{
      * 兑奖
      */
     public function actionComfirm(){
+        $this->layout = 'weixin';
         $param = $this->request();
         $service = $this->getService();
         if (!isset($param ['result_id']) || !isset($param ['win_code'])) {
