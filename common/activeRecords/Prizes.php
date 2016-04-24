@@ -20,7 +20,7 @@ class Prizes extends \common\activeRecords\BaseActiveRecord
     public $activityName;
 
     static  $prizeLevel = [
-        0=>'特等奖',
+//        0=>'特等奖',
         1=>'一等奖',
         2=>'二等奖',
         3=>'三等奖',

@@ -22,7 +22,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <?= $form->field($model,'activity_id')->hiddenInput();?>
                 <?= $form->field($model,'activityName')?>
                 <?= $form->field($model,'keyword')->dropDownList(\common\activeRecords\Prizes::$prizes)?>
-                <?= $form->field($model,'prize_level')->dropDownList([''=>'请选择',0=>'特等奖',1=>'一等奖',2=>'二等奖',3=>'三等奖',4=>'四等奖',5=>'五等奖'])?>
+                <?= $form->field($model,'prize_level')->dropDownList([''=>'请选择',1=>'一等奖',2=>'二等奖',3=>'三等奖',4=>'四等奖',5=>'五等奖'])?>
                 <?= $form->field($model,'name')?>
                 <?= $form->field($model,'num')?>
                 <?= $form->field($model,'win_rate')?>
