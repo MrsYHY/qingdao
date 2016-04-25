@@ -3,7 +3,6 @@
 use yii\helpers\Html;
 use backend\widgets\metronic\ActiveForm;
 use \common\activeRecords\LuckDrawResult;
-use arturoliveira\ExcelView;
 
 
 
@@ -56,8 +55,6 @@ $this->params['breadcrumbs'][] = $this->title;
                     <?php $pajax = \backend\widgets\Pjax::begin()?>
                     <?= \backend\widgets\metronic\GridView::widget([
                         'dataProvider' => $dataProvider,
-                        'exportConfig'=>'EXCEL',
-//                        'export'=>'excel',
                         'columns' => [
                             'id',
                             [
@@ -100,15 +97,6 @@ $this->params['breadcrumbs'][] = $this->title;
                                         }
                             ],
                             'win_code'
-                        ],
-                        'layout' => '{summary}<div class="pull-right">{export}&nbsp{fullexport}&nbsp</div><div>{items}</div>{pager}',
-                        'exportConfig' => [
-                            \kartik\grid\GridView::EXCEL => ['label' => 'Export to Excel'],
-                        ],
-                        'fullExportConfig' => [
-                            ExcelView::FULL_EXCEL => [],
-                            //ExcelView::FULL_CSV => ['label' => 'Save as CSV'],
-                            ExcelView::FULL_HTML => [],
                         ],
                     ]);?>
                     <?php $pajax->end();?>
