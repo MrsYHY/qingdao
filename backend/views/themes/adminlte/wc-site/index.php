@@ -12,6 +12,7 @@ $musicPath = $this->getAssetManager()->publish('@wechat/music/')[1];
 ?>
 <img src="<?=$imgPath?>/activity_home.jpg" width="100%" height="100%" style="position:absolute; left:0; top: 0; z-index: -1;">
 <img src="<?=$imgPath?>/shake_home.png" width="100%" height="100%" style="position:absolute; left:0; top: 0; z-index: -1;">
+<img src="<?=$imgPath?>/shake_1.png" width="100%" height="100%" style="position:absolute; left:0; top: 0; z-index: -1;">
 
 <div id="info" class="row" style="margin-top:20px;height: 50px">
 
