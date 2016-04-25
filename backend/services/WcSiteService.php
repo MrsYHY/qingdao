@@ -107,7 +107,7 @@ class WcSiteService extends WeChatService{
             $luckDrawResult->prize_level = -1;
             $luckDrawResult->created_at = date("Y-m-d H:i:s",time());
             $luckDrawResult->device_id = $device->id;
-            $luckDrawResult->is_award = LuckDrawResult::AWARD;
+            $luckDrawResult->is_award = -1;
             $luckDrawResult->win_code = '';
             if (!$luckDrawResult->save()){
 
