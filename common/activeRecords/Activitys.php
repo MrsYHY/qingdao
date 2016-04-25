@@ -71,7 +71,7 @@ class Activitys extends \common\activeRecords\BaseActiveRecord
      */
     public static function getByIdAndTime($pk){
         $now = date("Y-m-d H:i:s",time());
-        $ra = Activitys::find()->where(['id'=>$pk])->where('start_time<="'.$now.'"')->where('end_time>="'.$now.'"')->one();
+        $ra = Activitys::find()->where(['id'=>$pk])->andWhere('start_time<="'.$now.'"')->andWhere('end_time>="'.$now.'"')->one();
         if(empty($ra)){
             return false;
         }

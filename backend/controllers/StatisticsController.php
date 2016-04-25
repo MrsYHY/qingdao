@@ -12,9 +12,14 @@ namespace backend\controllers;
 use backend\components\SearchModel;
 use backend\forms\LuckDrawResultForm;
 use backend\services\StatisticsService;
+use common\activeRecords\Activitys;
+use common\activeRecords\Devices;
 use common\activeRecords\LuckDrawResult;
+use common\activeRecords\Prizes;
+use common\activeRecords\TerminalUser;
 use common\controller\BaseController;
 use common\forms\BaseForm;
+use common\widgets\ExcelGenerator;
 
 class StatisticsController extends BaseController{
 
@@ -36,18 +41,23 @@ class StatisticsController extends BaseController{
 //        var_dump($this->request());die;
         if ($luckDrawForm->submit()) {
             if ($luckDrawForm->validate()) {
-                $service = $this->getService();
-                $dataProvider = $service->searchForLuckDrawResult($luckDrawForm);
-                return $this->render('list_search',compact('dataProvider','luckDrawForm'));
+                $service = $this->getService();//echo $this->request('excel');die;
+                if ($this->request('excel') === 'excel'){
+                    $service->excel($luckDrawForm);
+                }else{
+                    $dataProvider = $service->searchForLuckDrawResult($luckDrawForm);
+                    return $this->render('list_search',compact('dataProvider','luckDrawForm'));
+                }
             }
         }
         return $this->render('list',compact('luckDrawForm'));
     }
     public function actionExport() {
-        $searchModel = new SearchModel([
-            'model' => ['class'=>'common\activeRecords\LuckDrawResult'],
-        ]);
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        \ExcelGenerator::widget(['dataProvider'=>$dataProvider,'filename'=>'摇奖统计']);
+        set_time_limit(0);
+        ini_set('memory_limit','1024M');
+        $service = $this->getService();
+        $luckDrawForm = new LuckDrawResultForm();
+        $luckDrawForm->submit();
+
     }
 } 

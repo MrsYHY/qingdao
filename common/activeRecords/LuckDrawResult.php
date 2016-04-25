@@ -80,7 +80,7 @@ class LuckDrawResult extends \common\activeRecords\BaseActiveRecord
 
     }
 
-    public static function search($search){
+    public static function search($search,$isExcel = false){
         $query = self::find();
         if (isset($search['activity_id']) && !empty($search['activity_id'])) {
             $query = $query->andWhere(['activity_id'=>$search['activity_id']]);
@@ -101,12 +101,20 @@ class LuckDrawResult extends \common\activeRecords\BaseActiveRecord
             $query = $query->andWhere(['device_id'=>$search['device_id']]);
         }
 
-        $dataProvider = new ActiveDataProvider([
-            'query'=>$query,
-            'pagination' => [
-                'pageSize' => 10,
-            ],
-        ]);
+        if ($isExcel === true){
+            $dataProvider = new ActiveDataProvider([
+                'query'=>$query,
+                'pagination' =>false,
+            ]);
+        }else{
+            $dataProvider = new ActiveDataProvider([
+                'query'=>$query,
+                'pagination' => [
+                    'pageSize' => 10,
+                ],
+            ]);
+        }
+
         return $dataProvider;
     }
 

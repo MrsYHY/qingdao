@@ -3,7 +3,9 @@
  * 快速导出Excel类
  * @author panxiale
  */
-use yii\base\Widget;
+namespace common\widgets;
+
+use yii\base\Exception;
 
 class ExcelGenerator extends Widget
 {

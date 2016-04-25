@@ -38,7 +38,7 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
         <div class="row">
             <div class="col-md-offset-5 col-md-3">
-                <button type="submit" class="btn green">查询</button>
+                <button type="submit" class="btn btn-primary" name="excel" value="">查询</button><button type="submit" style="margin-left: 20px;" name="excel"class=" btn btn-primary" value="excel">excel导出</button>
             </div>
         </div>
         <?php $form->end()?>
