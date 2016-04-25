@@ -12,7 +12,7 @@ $musicPath = $this->getAssetManager()->publish('@wechat/music/')[1];
 ?>
 <img src="<?=$imgPath?>/activity_home.jpg" width="100%" height="100%" style="position:absolute; left:0; top: 0; z-index: -1;">
 <img src="<?=$imgPath?>/shake_home.png" width="100%" height="100%" style="position:absolute; left:0; top: 0; z-index: -1;">
-<img src="<?=$imgPath?>/shake_1.png" width="100%" height="100%" style="position:absolute; left:0; top: 0; z-index: -1;">
+<img src="<?=$imgPath?>/shake_1.png" width="100%" height="100%" id="shake" style="position:absolute; left:0; top: 0; z-index: -1;">
 
 <div id="info" class="row" style="margin-top:20px;height: 50px">
 
@@ -78,6 +78,7 @@ $musicPath = $this->getAssetManager()->publish('@wechat/music/')[1];
                 var speed = Math.abs(x + y + z - last_x - last_y - last_z) / diffTime * 30000;
 
                 if (speed > SHAKE_THRESHOLD && canRequest == true) {
+                    shake('shake');
                     canRequest = false;
                     // TODO:在此处可以实现摇一摇之后所要进行的数据逻辑操作
                     $("#info").html('');
@@ -110,6 +111,17 @@ $musicPath = $this->getAssetManager()->publish('@wechat/music/')[1];
                 last_x = x;
                 last_y = y;
                 last_z = z;
+            }
+        }
+
+
+        function shake(o){
+            var $panel = $("#"+o);
+            box_left = ($(window).width() -  $panel.width()) / 2;
+            $panel.css({'left': box_left,'position':'absolute'});
+            for(var i=1; 4>=i; i++){
+                $panel.animate({left:box_left-(40-10*i)},50);
+                $panel.animate({left:box_left+2*(40-10*i)},50);
             }
         }
     });
