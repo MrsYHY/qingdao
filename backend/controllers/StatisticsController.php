@@ -48,17 +48,6 @@ class StatisticsController extends BaseController{
             'model' => ['class'=>'common\activeRecords\LuckDrawResult'],
         ]);
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        ExcelView::widget([
-            'dataProvider' => $dataProvider,
-            'filterModel' => $searchModel,
-            'fullExportType'=> 'xlsx', //can change to html,xls,csv and so on
-            'grid_mode' => 'export',
-            'columns' => [
-                ['class' => 'yii\grid\SerialColumn'],
-                'code',
-                'name',
-                'population',
-            ],
-        ]);
+        \ExcelGenerator::widget(['dataProvider'=>$dataProvider,'filename'=>'摇奖统计']);
     }
 } 
