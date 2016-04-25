@@ -50,7 +50,7 @@ class WcSiteService extends WeChatService{
             $this->failByJson("没有机会摇奖了！");
         }
 
-        if ($user->draw_luck_num == 0){
+        if ($user->draw_luck_num == -1){
             $this->failByJson("您没有机会抽奖咯");
         }
 
