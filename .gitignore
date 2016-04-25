@@ -31,6 +31,7 @@
 
 #backend
 /backend/runtime/*
+/backend/web/*.png
 runtime
 .idea
 vendor
