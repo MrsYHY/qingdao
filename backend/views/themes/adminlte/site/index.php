@@ -20,7 +20,7 @@ $end = date("Y-m-d 23:59:59",time());
             <div class="icon">
                 <i class="ion ion-bag"></i>
             </div>
-<!--            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>-->
+            <?=\yii\helpers\Html::a('导出报表',\yii\helpers\Url::to(['activity/excel']),['class'=>'small-box-footer'])?>
         </div>
     </div>
     <div class="col-lg-3 col-xs-6">
@@ -34,7 +34,7 @@ $end = date("Y-m-d 23:59:59",time());
             <div class="icon">
                 <i class="ion ion-ios-gear-outline"></i>
             </div>
-<!--            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>-->
+            <?=\yii\helpers\Html::a('导出报表',\yii\helpers\Url::to(['devices/excel']),['class'=>'small-box-footer'])?>
         </div>
     </div>
     <div class="col-lg-3 col-xs-6">

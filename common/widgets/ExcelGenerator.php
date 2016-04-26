@@ -113,7 +113,11 @@ class ExcelGenerator extends Widget
         if($this->filterCallback != null) {
             foreach ($data as &$row) {
                 $row = call_user_func($this->filterCallback, $row);
-                echo $this->toExcelRow($row);
+                if (isset($row[0]) && is_array($row[0])) {
+                    foreach ($row as $r) {
+                        echo $this->toExcelRow($r);
+                    }
+                }
             }
         } else{
             foreach ($data as $row) {

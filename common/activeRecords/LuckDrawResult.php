@@ -26,6 +26,8 @@ class LuckDrawResult extends \common\activeRecords\BaseActiveRecord
 
     const ZHONG = 1;//中奖
     const NOT_ZHONG = 0;//未中奖
+
+    public $name;
     /**
      * @inheritdoc
      */

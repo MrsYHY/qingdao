@@ -50,6 +50,10 @@ class Activitys extends \common\activeRecords\BaseActiveRecord
         ];
     }
 
+    public function getLuckDrawResult(){
+        return $this->hasMany(LuckDrawResult::className(),['activity_id'=>'id']);
+    }
+
     /**
      * @return \yii\db\ActiveQuery
      */

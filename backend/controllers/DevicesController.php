@@ -12,6 +12,8 @@ namespace backend\controllers;
 use backend\forms\DeviceForm;
 use backend\services\DevicesService;
 use common\activeRecords\Devices;
+use common\activeRecords\LuckDrawResult;
+use common\activeRecords\Zones;
 use common\controller\BaseController;
 use yii\data\ActiveDataProvider;
 
@@ -19,6 +21,7 @@ use yii\data\ArrayDataProvider;
 use yii\web\NotFoundHttpException;
 use common\exceptions\DbException;
 use yii\web\UploadedFile;
+use common\widgets\ExcelGenerator;
 
 class DevicesController extends BaseController{
 
@@ -223,6 +226,38 @@ class DevicesController extends BaseController{
             'allModels'=>$list,
         ]);
         return $this->render('page_list',compact('dataProvider'));
+    }
+
+    public function actionExcel(){
+        $query = Devices::find();
+        $dataProvider = new ActiveDataProvider([
+            'query'=>$query,
+        ]);
+        $excelHead = [
+            'device_name'=>'设备名称',
+            'device_keyword'=>'设备id',
+            'zone_id'=>'设备所属大区',
+            'sale_name'=>'促销员',
+            'shake_num'=>'设备摇奖次数',
+            'join_num'=>'设备摇奖人数',
+            'shake_zhong_num'=>'设备中奖次数',
+            'shake_award_num'=>'设备兑奖次数',
+        ];
+        $models = $dataProvider->getModels();
+        $d = new ExcelGenerator(['excelHead'=>$excelHead,'dataProvider'=>$models,'filename'=>'设备统计','filterCallback'=>function($model){
+                $data = [];
+                $data [] = $model->device_name;
+                $data [] = $model->device_keyword;
+                $data [] = Zones::findByPk($model->id)->name;
+                $data [] = $model->sale_name;
+                $data [] = LuckDrawResult::find()->where(['device_id'=>$model->id])->count();
+                $data [] = LuckDrawResult::getsBydeviceId($model->id);
+                $data [] = LuckDrawResult::find()->where(['device_id'=>$model->id,'result'=>LuckDrawResult::ZHONG])->count();
+                $data [] = LuckDrawResult::find()->where(['device_id'=>$model->id,'result'=>LuckDrawResult::ZHONG,'is_award'=>LuckDrawResult::AWARD])->count();
+                return $data;
+            }]);
+        echo $d->run();
+        \Yii::$app->end();
     }
 
 
