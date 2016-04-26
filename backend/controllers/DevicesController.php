@@ -243,13 +243,18 @@ class DevicesController extends BaseController{
             'shake_zhong_num'=>'设备中奖次数',
             'shake_award_num'=>'设备兑奖次数',
         ];
-        $models = $dataProvider->getModels();
+        $models = $dataProvider->getModels();//var_dump($models);die;
         $d = new ExcelGenerator(['excelHead'=>$excelHead,'dataProvider'=>$models,'filename'=>'设备统计','filterCallback'=>function($model){
                 $data = [];
-                $data [] = $model->device_name;
-                $data [] = $model->device_keyword;
-                $data [] = Zones::findByPk($model->id)->name;
-                $data [] = $model->sale_name;
+                $data [] = empty($model->device_name) ? '无数据' : $model->device_name;
+                $data [] = empty($model->device_keyword) ? '无数据' : $model->device_keyword;
+                $zone = Zones::findByPk($model->id);
+                if (empty($zone)) {
+                    $data [] = '无数据';
+                }else{
+                    $data [] = $zone->name;
+                }
+                $data [] = empty($model->sale_name) ? '无数据' : $model->sale_name;
                 $data [] = LuckDrawResult::find()->where(['device_id'=>$model->id])->count();
                 $data [] = LuckDrawResult::getsBydeviceId($model->id);
                 $data [] = LuckDrawResult::find()->where(['device_id'=>$model->id,'result'=>LuckDrawResult::ZHONG])->count();

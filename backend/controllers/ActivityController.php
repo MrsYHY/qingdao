@@ -13,6 +13,7 @@ use common\activeRecords\Devices;
 use common\activeRecords\LuckDrawResult;
 use common\activeRecords\Prizes;
 use common\activeRecords\Zones;
+use yii\redis\ActiveRecord;
 use yii\web\NotFoundHttpException;
 use common\exceptions\DbException;
 
@@ -115,10 +116,7 @@ class ActivityController extends BaseController{
 
 
     public function actionExcel(){
-        $query = Activitys::find();
-        $dataProvider = new ActiveDataProvider([
-            'query'=>$query,
-        ]);
+        $dataProvider = LuckDrawResult::findBySql('select * from luck_draw_result left join activitys on activitys.id=luck_draw_result.activity_id')->all();
         $excelHead = [
             'activity_name'=>'活动名称',
             'device_name'=>'设备名称',
@@ -129,36 +127,32 @@ class ActivityController extends BaseController{
             'shake_zhong_num'=>'活动中奖总次数',
             'shake_award_num'=>'活动兑奖总次数',
         ];
-        $models = $dataProvider->getModels();
-        $data = [];
-        foreach ($models as $model){
-            $luckDrawResult = $model->luckDrawResult;
-            if (empty($luckDrawResult)) {
-                $d [] = $model->title;
-                $d [] = '';
-                $d [] = '';
-                $d [] = '';
-                $d [] = '';
-                $d [] = '';
-                $d [] = '';
-                $d [] = '';
-                $data [] = $d;
-            }else {
-                foreach ($luckDrawResult as $l) {
-                    $d [] = $model->title;
-                    $device = Devices::findByPk($l->device_id);
-                    $d [] = $device->device_name;
-                    $d [] = $device->device_keyword;
-                    $d [] = Zones::findByPk($device->zone_id)->name;
-                    $d [] = LuckDrawResult::find()->where(['device_id'=>$l->device_id,'activity_id'=>$model->id])->count();
-                    $d [] = LuckDrawResult::find()->where(['device_id'=>$l->device_id,'activity_id'=>$model->id])->select(['user_id'])->distinct()->count();
-                    $d [] =  LuckDrawResult::find()->where(['device_id'=>$l->device_id,'activity_id'=>$model->id,'result'=>LuckDrawResult::ZHONG])->count();
-                    $d [] = LuckDrawResult::find()->where(['device_id'=>$l->device_id,'activity_id'=>$model->id,'result'=>LuckDrawResult::ZHONG,'is_award'=>LuckDrawResult::AWARD])->count();
-                    $data [] = $d;
+        $d = new ExcelGenerator(['excelHead'=>$excelHead,'dataProvider'=>$dataProvider,'filename'=>'活动统计','filterCallback'=>function($model){
+                $data = [];
+                $data [] = $model->title;
+                $device = Devices::findByPk($model->device_id);
+                if (empty($device)){
+                    $data [] = '';
+                    $data [] = '';
+                    $data [] = '';
+                }else{
+                    $data [] = $device->device_name;
+                    $data [] = $device->device_keyword;
+                    $zone = Zones::findByPk($device->zone_id);
+                    if (empty($zone)){
+                        $data [] = '';
+                    }else{
+                        $data [] = $zone->name;
+                    }
                 }
-            }
-        }
-        $d = new ExcelGenerator(['excelHead'=>$excelHead,'dataProvider'=>$data,'filename'=>'活动统计']);
+
+
+                $data [] = LuckDrawResult::find()->where(['device_id'=>$model->device_id,'activity_id'=>$model->activity_id])->count();
+                $data [] = LuckDrawResult::find()->where(['device_id'=>$model->device_id,'activity_id'=>$model->activity_id])->select(['user_id'])->distinct()->count();
+                $data [] =  LuckDrawResult::find()->where(['device_id'=>$model->device_id,'activity_id'=>$model->activity_id,'result'=>LuckDrawResult::ZHONG])->count();
+                $data [] = LuckDrawResult::find()->where(['device_id'=>$model->device_id,'activity_id'=>$model->activity_id,'result'=>LuckDrawResult::ZHONG,'is_award'=>LuckDrawResult::AWARD])->count();
+                return $data;
+            }]);
         echo $d->run();
         \Yii::$app->end();
     }

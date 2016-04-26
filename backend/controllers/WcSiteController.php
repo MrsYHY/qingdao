@@ -151,6 +151,10 @@ class WcSiteController extends BaseController{
         $winCode = $this->request('winCode');
         return $this->render('qr_code',compact('img','winCode'));
     }
-    
+
+    public function actionGuanzhu(){
+        $this->layout = "weixin";
+        return $this->render('guanzhu');
+    }
 
 } 

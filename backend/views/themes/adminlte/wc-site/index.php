@@ -36,12 +36,14 @@ $musicPath = $this->getAssetManager()->publish('@wechat/music/')[1];
     $(document).ready(function(){
         var myAudioWin = new Audio("<?=$musicPath?>/rock.mp3");
         var localStorage = window.localStorage;
-        var keyForStorage = 'openId';//localStorage.clear(keyForStorage)
-//        alert(localStorage.getItem(keyForStorage));
-        if (localStorage.getItem(keyForStorage) == null || localStorage.getItem(keyForStorage) == undefined) {
-            localStorage.setItem(keyForStorage,user_token);
-            alert('您需要关注我们公众号才有机会摇奖哦！','温馨提醒');
+        if (localStorage.getItem("first") == null || localStorage.getItem("first") == undefined){
+            localStorage.setItem("first",1);
+            window.location.href = "<?=Yii::$app->urlManager->createAbsoluteUrl(['wc-site/guanzhu'])?>";
         }
+
+        var keyForStorage = 'openId';//localStorage.clear(keyForStorage)
+        localStorage.setItem(keyForStorage,user_token);
+//        alert(localStorage.getItem(keyForStorage));
 
         if (window.DeviceMotionEvent) {
             // 移动浏览器支持运动传感事件
