@@ -27,6 +27,7 @@ class DeviceForm extends BaseForm{
     public $shake_num;
     public $device_name;
     public $device_id;
+    public $zone_id;
 
 
     /**
@@ -36,7 +37,7 @@ class DeviceForm extends BaseForm{
     {
         return [
             [['sale_name','user_id','shake_num','device_id'],'safe'],
-            [['device_keyword','device_name'],'required','on'=>'createDevice'],
+            [['device_keyword','device_name','zone_id'],'required','on'=>['createDevice','updateDevice']],
             [['pageIconUpload'],'file'],
             [['pageComment','pageIconUrl'],'safe'],
             [['pageTitle','pageDescription','pagePageUrl'], 'required','on'=>['pageCreate','pageUpdate']],
@@ -57,7 +58,8 @@ class DeviceForm extends BaseForm{
             'sale_name'=>'促销员',
             'shake_num'=>'摇一摇次数',
             'device_keyword'=>'设备标识',
-            'device_name'=>'设备名称'
+            'device_name'=>'设备名称',
+            'zone_id'=>'所在大区',
         ];
     }
 

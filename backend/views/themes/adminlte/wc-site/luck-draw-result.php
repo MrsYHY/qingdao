@@ -28,17 +28,22 @@ if(!isset($result)||$result === -1){
 <!--    <div style='width: 180px;height: 180px;position:absolute;left:25%;top:25%;text-align: center;z-index: 998;'>-->
 <!--        <img width="100%" height="100%" style="" src="--><?//=$qrPath?><!--"/>-->
 <!--    </div>-->
+    <button class="btn btn-primary" id="awardForMe">我要兑奖</button>
     <img width="100%" height="100%" style="position:absolute;left:0;top:0;text-align: center;z-index: 998;" src="<?=$imgPath."/".$resultKeyword?>.png">
     <img width="100%" height="100%" style="position:absolute;left:0;top:0;text-align: center;z-index: 998;" src="<?=$imgPath."/{$resultKeyword}_".$result?>.png">
 <?php } ?>
 
 <script>
     var result = <?php if(!isset($result)||$result === -1){echo 0;}else{echo 1;}?>;
-    $(document).ready(function(){
-        if (result == 1){
-        setTimeout(function(){
-            window.location.href = "<?= isset($qrPath)?Yii::$app->urlManager->createAbsoluteUrl(['wc-site/qr-code','img'=>$qrPath]):'';?>";
-        },3000);
-        }
+    var url = "<?= isset($qrPath)&&isset($winCode)?Yii::$app->urlManager->createAbsoluteUrl(['wc-site/qr-code','img'=>$qrPath,'winCode'=>$winCode]):'';?>";
+//    $(document).ready(function(){
+//        if (result == 1){
+//        setTimeout(function(){
+//            window.location.href = url;
+//        },3000);
+//        }
+//    })
+    $("#awardForMe").click(function(){
+        window.location.href = url;
     })
 </script>

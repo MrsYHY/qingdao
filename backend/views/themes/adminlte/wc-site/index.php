@@ -78,7 +78,7 @@ $musicPath = $this->getAssetManager()->publish('@wechat/music/')[1];
                 var speed = Math.abs(x + y + z - last_x - last_y - last_z) / diffTime * 30000;
 
                 if (speed > SHAKE_THRESHOLD && canRequest == true) {
-                    shake('shake');
+//                    shake('shake');
                     canRequest = false;
                     // TODO:在此处可以实现摇一摇之后所要进行的数据逻辑操作
                     $("#info").html('');
@@ -124,6 +124,8 @@ $musicPath = $this->getAssetManager()->publish('@wechat/music/')[1];
                 $panel.animate({left:box_left+2*(40-10*i)},50);
             }
         }
+
+        setInterval(function(){shake('shake')},500);
     });
 </script>
 

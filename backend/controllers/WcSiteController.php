@@ -113,13 +113,14 @@ class WcSiteController extends BaseController{
                             $resultKeyword = WcSiteService::$PRIZE_FOR_IMAGE[$prize->keyword];
                             $result = $luckResult->prize_level;//中奖等级
                             $qrPath = LuckDrawResult::generateQrCode($luckResult,$params['user_token']);
+                            $winCode = $luckResult->win_code;
                         }
                     }
                 }
             }
         }
 
-        return $this->render('luck-draw-result',compact('noValidForUser','result','resultKeyword','qrPath'));
+        return $this->render('luck-draw-result',compact('noValidForUser','result','resultKeyword','qrPath','winCode'));
 
     }
 
@@ -140,13 +141,15 @@ class WcSiteController extends BaseController{
             return $this->render('comfirm',compact('err'));
         }
         $prizeName = Prizes::findByPk($result->prize_id)->name;
-        return $this->render('comfirm',compact('err','prizeName'));
+        $winCode = $result->win_code;
+        return $this->render('comfirm',compact('err','prizeName','winCode'));
     }
 
     public function actionQrCode(){
         $this->layout = 'weixin';
         $img = $this->request('img');
-        return $this->render('qr_code',compact('img'));
+        $winCode = $this->request('winCode');
+        return $this->render('qr_code',compact('img','winCode'));
     }
     
 

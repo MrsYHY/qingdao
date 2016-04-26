@@ -38,6 +38,10 @@ $this->params['breadcrumbs'][] = $this->title;
                             'device_keyword',
                             'sale_name',
                             'shake_num',
+                            ['attribute'=>'zone_id','value'=>function($model){
+                                    $zone = \common\activeRecords\Zones::findByPk($model->zone_id);
+                                    if (!empty($zone)){return $zone->name;}else{return '未知所在大区';}
+                                }],
                             ['class' => 'yii\grid\ActionColumn','header'=>'操作','template' => '{view} {update} {delete}'],
                         ],
                     ]); ?>

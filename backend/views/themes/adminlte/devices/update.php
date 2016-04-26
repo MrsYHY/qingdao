@@ -20,6 +20,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     <?= $form->field($model, 'device_name') ?>
                     <?= $form->field($model, 'device_keyword')?>
                     <?= $form->field($model, 'sale_name')?>
+                    <?= $form->field($model, 'zone_id')->dropDownList(\yii\helpers\ArrayHelper::map(\common\activeRecords\Zones::find()->all(),'id','name'))?>
                 </div>
                 <div class="form-actions">
                     <div class="row">

@@ -13,6 +13,7 @@ use Yii;
  * @property integer $user_id
  * @property integer $shake_num
  * @property string $sale_name
+ * @property string $zone_id
  */
 class Devices extends \common\activeRecords\BaseActiveRecord
 {
@@ -30,7 +31,7 @@ class Devices extends \common\activeRecords\BaseActiveRecord
     public function rules()
     {
         return [
-            [['device_keyword', 'user_id'], 'required'],
+            [['device_keyword', 'user_id','zone_id'], 'required'],
             [['user_id', 'shake_num'], 'integer'],
             [['device_name'], 'string', 'max' => 50],
             [['device_keyword','sale_name'], 'string', 'max' => 255],
@@ -48,7 +49,8 @@ class Devices extends \common\activeRecords\BaseActiveRecord
             'device_keyword' => '设备标识',
             'user_id' => '促销员',
             'shake_num' => '摇一摇次数',
-            'sale_name'=>'促销员'
+            'sale_name'=>'促销员',
+            'zone_id'=>'所在大区',
         ];
     }
 

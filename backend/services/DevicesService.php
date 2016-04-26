@@ -152,6 +152,7 @@ class DevicesService extends BaseService{
         $device->user_id = 0;
         $device->shake_num = 0;
         $device->device_name = $deviceForm->device_name;
+        $device->zone_id = $deviceForm->zone_id;
         if ($device->save()) {
             return $device->id;
         }

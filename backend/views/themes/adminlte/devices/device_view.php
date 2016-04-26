@@ -19,6 +19,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'device_name',
                     'sale_name',
                     'shake_num',
+                    ['attribute'=>'zone_id','value'=>\common\activeRecords\Zones::findByPk($model->zone_id)->name]
                 ],
             ]) ?>
         </div>
