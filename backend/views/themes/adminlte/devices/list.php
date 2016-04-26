@@ -38,6 +38,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             'device_keyword',
                             'sale_name',
                             'shake_num',
+                            ['attribute'=>'join_num','label'=>'参与人数','value'=>function($model){return \common\activeRecords\LuckDrawResult::getsBydeviceId($model->id);}],
                             ['attribute'=>'zone_id','value'=>function($model){
                                     $zone = \common\activeRecords\Zones::findByPk($model->zone_id);
                                     if (!empty($zone)){return $zone->name;}else{return '未知所在大区';}

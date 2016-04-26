@@ -4,7 +4,7 @@
  * Date: 15-5-29
  * Time: 下午10:56
  */
-$this->title = '控制面板';
+$this->title = '数据汇总';
 $this->params['breadcrumbs'] = [$this->title];
 $start = date("Y-m-d 00:00:00",time());
 $end = date("Y-m-d 23:59:59",time());

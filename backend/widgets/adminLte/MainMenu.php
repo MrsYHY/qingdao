@@ -27,6 +27,7 @@ class MainMenu extends Widget{
         foreach($items as $menu){
             $html.='<li class="treeview">';
             $childItems = Menu::find()->select(['id','route as url','name as label','display as visible','icon'])->where('display = 1 and parent = '.$menu['id'])->orderBy('index asc')->asArray()->all();
+            if(count($childItems)) {
             if(!\Yii::$app->user->can($menu['url']) ){
                 if($menu['url']!='javascript:;')
                     continue;
@@ -36,14 +37,13 @@ class MainMenu extends Widget{
                     $url = Url::toRoute($menu['url']);
 
             $html.= '<a href="'.$url.'"> <i class="'.$menu['icon'].'"></i><span>'.$menu['label'].'</span><i class="fa fa-angle-left pull-right"></i></a>';
-            if(count($childItems)) {
-                $html.='<ul class="treeview-menu">';
-                foreach ($childItems as $childItem) {
-                    if(!\Yii::$app->user->can($childItem['url']))
-                        continue;
-                    $html.='<li class="active"><a href="'.Url::toRoute($childItem['url']).'">'.$childItem['label'].'</a></li>';
-                }
-                $html.='</ul>';
+            $html.='<ul class="treeview-menu">';
+            foreach ($childItems as $childItem) {
+                if(!\Yii::$app->user->can($childItem['url']))
+                    continue;
+                $html.='<li class="active"><a href="'.Url::toRoute($childItem['url']).'">'.$childItem['label'].'</a></li>';
+            }
+            $html.='</ul>';
             }
             $html.='</li>';
         }

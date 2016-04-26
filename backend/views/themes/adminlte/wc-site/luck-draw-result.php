@@ -28,7 +28,7 @@ if(!isset($result)||$result === -1){
 <!--    <div style='width: 180px;height: 180px;position:absolute;left:25%;top:25%;text-align: center;z-index: 998;'>-->
 <!--        <img width="100%" height="100%" style="" src="--><?//=$qrPath?><!--"/>-->
 <!--    </div>-->
-    <button class="btn btn-primary" id="awardForMe">我要兑奖</button>
+    <button class="btn btn-primary" style="position:absolute;right:2;top:2;z-index: 999;" id="awardForMe">我要兑奖</button>
     <img width="100%" height="100%" style="position:absolute;left:0;top:0;text-align: center;z-index: 998;" src="<?=$imgPath."/".$resultKeyword?>.png">
     <img width="100%" height="100%" style="position:absolute;left:0;top:0;text-align: center;z-index: 998;" src="<?=$imgPath."/{$resultKeyword}_".$result?>.png">
 <?php } ?>

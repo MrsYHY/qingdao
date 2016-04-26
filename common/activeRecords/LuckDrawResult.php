@@ -135,4 +135,12 @@ class LuckDrawResult extends \common\activeRecords\BaseActiveRecord
             'win_code'=>'兑奖码',
         ];
     }
+
+    /**
+     * 获取参与人数
+     */
+    public static function getsBydeviceId($deviceId){
+        $s = self::find()->where(['device_id'=>$deviceId])->select(['user_id'])->distinct()->count();
+        return $s;
+    }
 }
