@@ -12,11 +12,13 @@ $imgPath = $this->getAssetManager()->publish('@wechat/img/')[1];
 <img src="<?=$imgPath?>/activity_home.jpg" width="100%" height="100%" style="position:absolute; left:0; top: 0; z-index: -1;">
 
 <div id="info" class="row" >
-    <button class="btn btn_guanzhu">即刻关注</button>
+    <div class="col-sm-3 btn_guanzhu">
+        <button class="btn"  id='guanzhu' style="background-color: #DA7809;">即刻关注</button>
+    </div>
 </div>
 
 <style>
-    #info{
+    #info{padding: 0;margin: 0;
         width:200px;
         height:150px;
         position: absolute;
@@ -26,11 +28,23 @@ $imgPath = $this->getAssetManager()->publish('@wechat/img/')[1];
         background-image:url("<?=$imgPath?>/gz_back.png?>") ;
     }
     .btn_guanzhu{
-        background-color: #DA7809;
+        padding: 0;margin: 0;
+        width: 40px;
+        /*position: absolute;*/
+        /*bottom: 10%;*/
+        /*left: 50%;*/
+        /*margin-left: -100px;*/
+        margin: 100px auto 0;
         font-family: "黑体";
         font-size: 14px;
         color: white;
-        margin: 100px auto 0;
     }
 </style>
+
+<script>
+    var url = "<?=\common\config\BaseConfig::WECHAT_ACTIVITY_URL?>";
+    $("#guanzhu").click(function(){
+        window.location.href = url;
+    });
+</script>
 

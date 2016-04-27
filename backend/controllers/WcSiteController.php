@@ -112,6 +112,7 @@ class WcSiteController extends BaseController{
                         }else{
                             $resultKeyword = WcSiteService::$PRIZE_FOR_IMAGE[$prize->keyword];
                             $result = $luckResult->prize_level;//中奖等级
+                            $prizeName = $prize->name;
                             $qrPath = LuckDrawResult::generateQrCode($luckResult,$params['user_token']);
                             $winCode = $luckResult->win_code;
                         }
@@ -120,7 +121,7 @@ class WcSiteController extends BaseController{
             }
         }
 
-        return $this->render('luck-draw-result',compact('noValidForUser','result','resultKeyword','qrPath','winCode'));
+        return $this->render('luck-draw-result',compact('noValidForUser','result','resultKeyword','qrPath','winCode','prizeName'));
 
     }
 
