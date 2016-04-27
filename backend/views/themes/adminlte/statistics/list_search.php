@@ -11,8 +11,8 @@ use \common\activeRecords\LuckDrawResult;
 /* @var $searchModel backend\components\SearchModel */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = '页面列表';
-$this->params['breadcrumbs'][] = '设备管理';
+$this->title = '摇奖结果列表';
+$this->params['breadcrumbs'][] = '统计管理';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="row">
