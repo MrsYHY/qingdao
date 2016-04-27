@@ -10,6 +10,8 @@ $imgPath = $this->getAssetManager()->publish('@wechat/img/')[1];
 $musicPath = $this->getAssetManager()->publish('@wechat/music/')[1];
 
 ?>
+<div class="container">
+    <div class="row">
 <img src="<?=$imgPath?>/comfirm_1.png" width="100%" height="100%" style="position:absolute; left:0; top: 0; z-index: -1;">
 <?php if($noValidForUser === true){?>
 <div id="info" class="row" style="margin-top:40px;height: 50px">
@@ -24,7 +26,7 @@ if(!isset($result)||$result === -1){
     <img width="100%" height="100%" style="position:absolute;left:0;top:0;text-align: center;z-index: 997;" src="<?=$imgPath."/no_win"?>.png">
     <img width="100%" height="100%" style="position:absolute;left:0;top:0;text-align: center;z-index: 998;" src="<?=$imgPath."/no_win_".$first?>.png">
 <?php }else{?>
-<div class="panel panel-default" style="margin-top: 90%;">
+<div class="panel panel-default" style="margin-top: 90%;max-height: 150px;">
     <div class="panel-heading" style="background-color: #ffffff;border-bottom: 2px solid #127500;text-align: center;">恭喜您获得</div>
     <div class="panel-body">
         <div class="container_fluid">
@@ -70,7 +72,8 @@ if(!isset($result)||$result === -1){
 <!--    <img width="100%" height="100%" style="position:absolute;left:0;top:0;text-align: center;z-index: 998;" src="--><?//=$imgPath."/".$resultKeyword?><!--.png">-->
 <!--    <img width="100%" height="100%" style="position:absolute;left:0;top:0;text-align: center;z-index: 998;" src="--><?//=$imgPath."/{$resultKeyword}_".$result?><!--.png">-->
 <?php } ?>
-
+    </div>
+</div>
 <script>
     var result = <?php if(!isset($result)||$result === -1){echo 0;}else{echo 1;}?>;
     var url = "<?= isset($qrPath)&&isset($winCode)?Yii::$app->urlManager->createAbsoluteUrl(['wc-site/qr-code','img'=>$qrPath,'winCode'=>$winCode]):'';?>";
