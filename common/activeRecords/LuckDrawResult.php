@@ -144,7 +144,21 @@ class LuckDrawResult extends \common\activeRecords\BaseActiveRecord
      * 获取参与人数
      */
     public static function getsBydeviceId($deviceId){
-        $s = self::find()->where(['device_id'=>$deviceId])->select(['user_id'])->distinct()->count();
+        $s = self::find()->where(['device_id'=>$deviceId])->select(['user_id'])->distinct()->all();
+        $count = 0;
+        foreach ($s as $_s){
+            $user = TerminalUser::find()->where(['id'=>$_s->user_id])->andWhere('sign_in_num!=-1')->one();
+            if (!empty($user)){
+                $count ++;
+            }
+        }
+        return $count;
+    }
+
+    public static function getJoinNumEveryDay(){
+        $start = date("Y-m-d 00:00:00",time());
+        $end = date("Y-m-d 23:59:59",time());
+        $s = self::find()->where('created_at>"'.$start.'"')->andWhere('created_at<"'.$end.'"')->select(['user_id'])->distinct()->count();
         return $s;
     }
 }

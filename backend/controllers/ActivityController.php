@@ -119,6 +119,8 @@ class ActivityController extends BaseController{
         $dataProvider = LuckDrawResult::findBySql('select * from luck_draw_result left join activitys on activitys.id=luck_draw_result.activity_id')->all();
         $excelHead = [
             'activity_name'=>'活动名称',
+            'start_time'=>'活动开始时间',
+            'end_time'=>'活动结束时间',
             'device_name'=>'设备名称',
             'device_id'=>'设备id',
             'zone_id'=>'设备所属大区',
@@ -130,6 +132,9 @@ class ActivityController extends BaseController{
         $d = new ExcelGenerator(['excelHead'=>$excelHead,'dataProvider'=>$dataProvider,'filename'=>'活动统计','filterCallback'=>function($model){
                 $data = [];
                 $data [] = $model->title;
+                $activity = Activitys::findByPk($model->activity_id);
+                $data [] = empty($activity->start_time) ? '没有设置' : $activity->start_time;
+                $data [] = empty($activity->end_time) ? '没有设置' : $activity->end_time;
                 $device = Devices::findByPk($model->device_id);
                 if (empty($device)){
                     $data [] = '';
