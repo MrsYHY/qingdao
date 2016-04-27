@@ -12,7 +12,7 @@ $musicPath = $this->getAssetManager()->publish('@wechat/music/')[1];
 ?>
 <img src="<?=$imgPath?>/activity_home.jpg" width="100%" height="100%" style="position:absolute; left:0; top: 0; z-index: -1;">
 <img src="<?=$imgPath?>/shake_home.png" width="100%" height="100%" style="position:absolute; left:0; top: 0; z-index: -1;">
-<img src="<?=$imgPath?>/shake_1.png" width="93px" height="293px" id="shake" style="clear: both;display: block;margin:50% auto 0; ">
+<img src="<?=$imgPath?>/shake_1.png" width="93px" height="268px" id="shake" style="clear: both;display: block;margin:40% auto 0; ">
 
 <div id="info" class="row" style="margin-top:20px;height: 50px">
 
@@ -122,8 +122,8 @@ $musicPath = $this->getAssetManager()->publish('@wechat/music/')[1];
             box_left = ($(window).width() -  $panel.width()) / 2;
             $panel.css({'left': box_left,'position':'absolute'});
             for(var i=1; 4>=i; i++){
-                $panel.animate({left:box_left-(40-10*i)},50);
-                $panel.animate({left:box_left+2*(40-10*i)},50);
+                $panel.animate({left:box_left-(40-10*i)},150);
+                $panel.animate({left:box_left+2*(40-10*i)},150);
             }
         }
 
