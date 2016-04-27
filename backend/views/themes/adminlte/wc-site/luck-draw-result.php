@@ -31,7 +31,7 @@ if(!isset($result)||$result === -1){
     <div class="panel-body">
         <div class="container_fluid">
             <div class="row">
-                <div class="col-xs-6"><img width="50%" height="50%" src="<?=$imgPath?>/qingdao.gif"/></div>
+                <div class="col-xs-6"><img class="pull-right" width="50%" height="50%" src="<?=$imgPath?>/qingdao.gif"/></div>
                 <div class="col-xs-6 text-center" style="win-height:150px;line-height:150px;text-align: center;font-size:18px;font-family: '黑体' "><?=$prizeName;?></div>
             </div>
         </div>
