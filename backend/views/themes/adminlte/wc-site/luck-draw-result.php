@@ -31,14 +31,14 @@ if(!isset($result)||$result === -1){
     <div class="panel-body">
         <div class="container_fluid">
             <div class="row">
-                <div class="col-xs-6"><img width="50%" height="50%" src="<?=$imgPath?>/qingdao.gif"/></div>
+                <div class="col-xs-6"><img class="pull-right" width="50%" height="50%" src="<?=$imgPath?>/qingdao.gif"/></div>
                 <div class="col-xs-6 text-center" style="win-height:150px;line-height:150px;text-align: center;font-size:18px;font-family: '黑体' "><?=$prizeName;?></div>
             </div>
         </div>
     </div>
 </div>
-<div class="row" style="clear: both;margin-top: 10px;">
-    <div style="display: table;width: auto;margin:  10px  auto 0;"><span id='awardForMe' class="btn btn-primary" style="color:white;background-color: #DA7809">确认领奖</span></div>
+<div class="row" style="clear: both;">
+    <div style="display: table;width: auto;margin:  0px  auto 0;"><span id='awardForMe' class="btn btn-primary" style="color:white;background-color: #DA7809">确认领奖</span></div>
 </div>
 <!--<div class="container n" style="" >-->
 <!--    <div class="row" style="display:table;min-width: 200px;margin: 0 auto;">-->
