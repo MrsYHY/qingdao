@@ -59,7 +59,9 @@ $this->params['breadcrumbs'][] = $this->title;
                             'id',
                             [
                             'attribute'=>'activity_id',
-                            'value'=>function($model){return \common\activeRecords\Activitys::findByPk($model->activity_id)->title;}
+                            'value'=>function($model){
+                                    $activity = \common\activeRecords\Activitys::findByPk($model->activity_id);
+                                    return empty($activity) ? '' : $activity->title;}
                             ],
                             [
                                 'attribute'=>'result',
@@ -73,14 +75,19 @@ $this->params['breadcrumbs'][] = $this->title;
                                 'attribute'=>'prize_id',
                                 'value'=>function($model){
                                         if ($model->result == LuckDrawResult::NOT_ZHONG){return '';}
-                                        return \common\activeRecords\Prizes::findByPk($model->prize_id)->name;
+                                        $prize = \common\activeRecords\Prizes::findByPk($model->prize_id);
+                                        if (empty($prize)){
+                                            return '';
+                                        }else{
+                                            return $prize->name;
+                                        }
                                     }
                             ],
                             [
                                 'attribute'=>'prize_level',
                                 'value'=>function($model){
                                         if ($model->result == LuckDrawResult::NOT_ZHONG){return '';}
-                                        return \common\activeRecords\Prizes::$prizeLevel[$model->prize_level];
+                                        return isset(\common\activeRecords\Prizes::$prizeLevel[$model->prize_level])?\common\activeRecords\Prizes::$prizeLevel[$model->prize_level] : '';
                                     }
                             ],
                             'created_at',
