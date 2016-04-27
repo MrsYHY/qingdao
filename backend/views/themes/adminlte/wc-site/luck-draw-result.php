@@ -12,7 +12,7 @@ $musicPath = $this->getAssetManager()->publish('@wechat/music/')[1];
 ?>
 <div class="container">
     <div class="row">
-<img src="<?=$imgPath?>/comfirm_1.png" width="100%" height="100%" style="position:absolute; left:0; top: 0; z-index: -1;">
+<img src="<?=$imgPath?>/activity_home.jpg" width="100%" height="100%" style="position:absolute; left:0; top: 0; z-index: -1;">
 <?php if($noValidForUser === true){?>
 <div id="info" class="row" style="margin-top:40px;height: 50px">
         <div class="alert alert-danger col-xs-10 col-xs-offset-1"><h4>您还未关注我们微信公共号！</h4></div>
@@ -26,12 +26,12 @@ if(!isset($result)||$result === -1){
     <img width="100%" height="100%" style="position:absolute;left:0;top:0;text-align: center;z-index: 997;" src="<?=$imgPath."/no_win"?>.png">
     <img width="100%" height="100%" style="position:absolute;left:0;top:0;text-align: center;z-index: 998;" src="<?=$imgPath."/no_win_".$first?>.png">
 <?php }else{?>
-<div class="panel panel-default" style="margin-top: 90%;max-height: 150px;">
-    <div class="panel-heading" style="background-color: #ffffff;border-bottom: 2px solid #127500;text-align: center;">恭喜您获得</div>
+<div class="panel panel-default " style="border-radius:20px;margin-top: 70%;max-height: 200px;">
+    <div class="panel-heading" style="border-top-left-radius: 20px;border-top-right-radius:20px;background-color: #ffffff;border-bottom: 2px solid #127500;text-align: center;color: #127500;font-size:16px;font-weight:bold;font-family: '黑体'">恭喜您获得</div>
     <div class="panel-body">
         <div class="container_fluid">
             <div class="row">
-                <div class="col-xs-6"><img src="<?=$imgPath?>/qingdao.gif"/></div>
+                <div class="col-xs-6"><img width="50%" height="50%" src="<?=$imgPath?>/qingdao.gif"/></div>
                 <div class="col-xs-6 text-center" style="win-height:150px;line-height:150px;text-align: center;font-size:18px;font-family: '黑体' "><?=$prizeName;?></div>
             </div>
         </div>

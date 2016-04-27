@@ -10,7 +10,11 @@ $imgPath = $this->getAssetManager()->publish('@wechat/img/')[1];
 
 ?>
 <img src="<?=$imgPath?>/activity_home.jpg" width="100%" height="100%" style="position:absolute; left:0; top: 0; z-index: -1;">
-
+<!--<div class="panel panel-default " style='border-radius:10px;width: 200px;height: 150px;'>-->
+<!--    <div class="panel-body" style='background-image: url("--><?//=$imgPath?><!--/gz_back.png")'>-->
+<!---->
+<!--    </div>-->
+<!--</div>-->
 <div id="info" class="row" >
     <div class="col-sm-3 btn_guanzhu">
         <button class="btn"  id='guanzhu' style="background-color: #DA7809;">即刻关注</button>
@@ -28,13 +32,7 @@ $imgPath = $this->getAssetManager()->publish('@wechat/img/')[1];
         background-image:url("<?=$imgPath?>/gz_back.png?>") ;
     }
     .btn_guanzhu{
-        padding: 0;margin: 0;
-        width: 40px;
-        /*position: absolute;*/
-        /*bottom: 10%;*/
-        /*left: 50%;*/
-        /*margin-left: -100px;*/
-        margin: 100px auto 0;
+        display: table;width: auto;margin:  110px  auto 0;
         font-family: "黑体";
         font-size: 14px;
         color: white;
