@@ -16,7 +16,7 @@ $imgPath = $this->getAssetManager()->publish('@wechat/img/')[1];
 <!--    </div>-->
 <!--</div>-->
 <div id="info"  >
-    <div class="col-sm-3 btn_guanzhu">
+    <div class="btn_guanzhu">
         <button class="btn"  id='guanzhu' style="background-color: #DA7809;">即刻关注</button>
     </div>
 </div>

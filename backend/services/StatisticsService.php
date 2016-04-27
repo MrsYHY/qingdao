@@ -44,8 +44,8 @@ class StatisticsService extends BaseService{
                 $data = [];
                 $data [] = $model->id;
                 $data [] = Activitys::findByPk($model->activity_id)->title;
-                $data [] = TerminalUser::findByPk($model->user_id)->terminal_user_token;
                 $data [] = Devices::findByPk($model->device_id)->device_keyword;
+                $data [] = TerminalUser::findByPk($model->user_id)->terminal_user_token;
                 $data [] = $model->result == LuckDrawResult::ZHONG ? '中奖' : '没中奖';
                 $prize = Prizes::findByPk($model->prize_id);
 
