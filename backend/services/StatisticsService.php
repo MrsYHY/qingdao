@@ -30,7 +30,7 @@ class StatisticsService extends BaseService{
         $excelHead = [
             'id'=>'统计id',
             'activity_id'=>'活动',
-            'device_id'=>'设备标识',
+            'device_id'=>'设备id',
             'user_id'=>'用户',
             'result'=>'摇奖结果',
             'prize_id'=>'奖品',
