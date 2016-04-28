@@ -10,6 +10,28 @@ $imgPath = $this->getAssetManager()->publish('@wechat/img/')[1];
 $musicPath = $this->getAssetManager()->publish('@wechat/music/')[1];
 
 ?>
+<script type="text/javascript"
+        src="http://zb.weixin.qq.com/nearbycgi/addcontact/BeaconAddContactJsBridge.js">
+</script>
+<script type="text/javascript">
+    BeaconAddContactJsBridge.ready(function(){
+        //判断是否关注
+        BeaconAddContactJsBridge.invoke('checkAddContactStatus',{} ,function(apiResult){
+            if(apiResult.err_code == 0){
+                var status = apiResult.data;
+                if(status == 1){
+                    alert('已关注');
+                }else{
+                    alert('未关注');
+                    //跳转到关注页
+                    BeaconAddContactJsBridge.invoke('jumpAddContact');
+                }
+            }else{
+                alert(apiResult.err_msg)
+            }
+        });
+    });
+</script>
 <img src="<?=$imgPath?>/activity_home.jpg" width="100%" height="100%" style="position:absolute; left:0; top: 0; z-index: -1;">
 <img src="<?=$imgPath?>/shake_home.png" width="100%" height="100%" style="position:absolute; left:0; top: 0; z-index: -1;">
 <img src="<?=$imgPath?>/shake_1.png" width="83px" height="240px" id="shake" style="clear: both;display: block;margin:61% auto 0; ">
