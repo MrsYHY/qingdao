@@ -110,7 +110,7 @@ $musicPath = $this->getAssetManager()->publish('@wechat/music/')[1];
                         async:true,
                         url:<?='"'.Yii::$app->urlManager->createAbsoluteUrl(['wc-site/luck-draw']).'"'?>,
                         type:"GET",
-                        data:{user_token:user_token,activity_id:activity_id,device_id:device_id,open_id:localStorage.getItem(keyForStorage)},
+                        data:{user_token:user_token,activity_id:activity_id,device_id:device_id,open_id:user_token},
                         dataType:'json',
                         success:function(data){
                             if (data.code == 1) {
