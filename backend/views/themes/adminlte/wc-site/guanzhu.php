@@ -16,23 +16,24 @@ $imgPath = $this->getAssetManager()->publish('@wechat/img/')[1];
 <!--    </div>-->
 <!--</div>-->
 <div id="info"  >
+<img width="100%" height="100%"style="position: relative;left:0;right0;z-index: -1" src="<?=$imgPath?>/gz_back.png?>">
     <div class="btn_guanzhu">
-        <button class="btn"  id='guanzhu' style="background-color: #DA7809;">即刻关注</button>
+        <button class="btn"  id='guanzhu' style="font-size:20px; border-radius:10px;width:150px;height:60px;background-color: #DA7809;">即刻关注</button>
     </div>
 </div>
 
 <style>
     #info{padding: 0;margin: 0;
-        width:200px;
-        height:150px;
+        width:400px;
+        height:300px;
         position: absolute;
         bottom: 5%;
-        left: 50%;
+        left: 30%;
         margin-left: -100px;
-        background-image:url("<?=$imgPath?>/gz_back.png?>") ;
+        /*background-image:url("<?=$imgPath?>/gz_back.png?>") ;*/
     }
     .btn_guanzhu{
-        display: table;width: auto;margin:  110px  auto 0;
+        display: table;width: auto;margin:  -80px  auto 0;
         font-family: "黑体";
         font-size: 14px;
         color: white;

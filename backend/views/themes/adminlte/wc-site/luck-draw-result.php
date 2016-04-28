@@ -26,20 +26,20 @@ if(!isset($result)||$result === -1){
     <img width="100%" height="100%" style="position:absolute;left:0;top:0;text-align: center;z-index: 997;" src="<?=$imgPath."/no_win"?>.png">
     <img width="100%" height="100%" style="position:absolute;left:0;top:0;text-align: center;z-index: 998;" src="<?=$imgPath."/no_win_".$first?>.png">
 <?php }else{?>
-<div class="panel panel-default " style="border-radius:20px;margin-top: 65%;max-height: 200px;">
+<div class="panel panel-default " style="border-radius:20px;margin-top: 75%;max-height: 200px;">
     <div class="panel-heading" style="border-top-left-radius: 20px;border-top-right-radius:20px;background-color: #ffffff;border-bottom: 2px solid #127500;text-align: center;color: #127500;font-size:16px;font-weight:bold;font-family: '黑体'">恭喜您获得</div>
     <div class="panel-body">
         <div class="container_fluid">
             <div class="row">
                 <div class="col-xs-6"><img class="pull-right" width="50%" height="50%" src="<?=$imgPath?>/qingdao.gif"/></div>
-                <div class="col-xs-6 text-center" style="win-height:150px;line-height:150px;text-align: center;font-size:18px;font-family: '黑体' "><?=$prizeName;?></div>
+                <div class="col-xs-6 text-center" style="win-height:150px;text-align: center;font-size:18px;font-family: '黑体' "><?=$prizeName;?></div>
             </div>
         </div>
     </div>
 </div>
 
 <div class="row" style="clear: both;">
-    <div style="display: table;width: auto;margin:  0px  auto 0;"><span id='awardForMe' class="btn btn-primary" style="color:white;background-color: #DA7809">确认领奖</span></div>
+    <div style="display: table;width: auto;margin: -15px  auto 0;"><span id='awardForMe' class="btn btn-primary" style="margin:0;padding:0;border:none;width:100px;height:40px; font-size:18px;line-height:40px;border-radius:20px;color:white;background-color: #DA7809">确认领奖</span></div>
 </div>
 <!--<div class="container n" style="" >-->
 <!--    <div class="row" style="display:table;min-width: 200px;margin: 0 auto;">-->
