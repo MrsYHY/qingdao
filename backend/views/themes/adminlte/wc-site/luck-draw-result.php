@@ -10,8 +10,7 @@ $imgPath = $this->getAssetManager()->publish('@wechat/img/')[1];
 $musicPath = $this->getAssetManager()->publish('@wechat/music/')[1];
 
 ?>
-<div class="container">
-    <div class="row">
+
 <img src="<?=$imgPath?>/activity_home.jpg" width="100%" height="100%" style="position:absolute; left:0; top: 0; z-index: -1;">
 <?php if($noValidForUser === true){?>
 <div id="info" class="row" style="margin-top:40px;height: 50px">
@@ -26,9 +25,9 @@ if(!isset($result)||$result === -1){
     <img width="100%" height="100%" style="position:absolute;left:0;top:0;text-align: center;z-index: 997;" src="<?=$imgPath."/no_win"?>.png">
     <img width="100%" height="100%" style="position:absolute;left:0;top:0;text-align: center;z-index: 998;" src="<?=$imgPath."/no_win_".$first?>.png">
 <?php }else{?>
-<div class="panel panel-default " style="border-radius:20px;margin-top: 84%;max-height: 200px;">
-    <div class="panel-heading" style="border-top-left-radius: 20px;border-top-right-radius:20px;background-color: #ffffff;border-bottom: 2px solid #127500;text-align: center;color: #127500;font-size:16px;font-weight:bold;font-family: '黑体'">恭喜您获得</div>
-    <div class="panel-body">
+<div class="info" style="border-radius:20px;margin-top: 80%;max-height: 250px;">
+    <div class="" style="border-top-left-radius: 20px;border-top-right-radius:20px;background-color: #ffffff;border-bottom: 2px solid #127500;text-align: center;color: #127500;font-size:18px;font-weight:bold;font-family: '黑体'">恭喜您获得</div>
+    <div class="" style="background-color: white;">
         <div class="container_fluid">
             <div class="row">
                 <div class="col-xs-6"><img class="pull-right" width="50%" height="50%" src="<?=$imgPath?>/qingdao.gif"/></div>
@@ -39,7 +38,7 @@ if(!isset($result)||$result === -1){
 </div>
 
 <div class="row" style="clear: both;">
-    <div style="display: table;width: auto;margin: -15px  auto 0;"><span id='awardForMe' class="btn btn-primary" style="margin:0;padding:0;border:none;width:100px;height:40px; font-size:18px;line-height:40px;border-radius:20px;color:white;background-color: #DA7809">确认领奖</span></div>
+    <div style="display: table;width: auto;margin: 15px  auto 0;"><span id='awardForMe' class="btn btn-primary" style="margin:0;padding:0;border:none;width:100px;height:40px; font-size:18px;line-height:40px;border-radius:20px;color:white;background-color: #DA7809">确认领奖</span></div>
 </div>
 <!--<div class="container n" style="" >-->
 <!--    <div class="row" style="display:table;min-width: 200px;margin: 0 auto;">-->
@@ -73,8 +72,7 @@ if(!isset($result)||$result === -1){
 <!--    <img width="100%" height="100%" style="position:absolute;left:0;top:0;text-align: center;z-index: 998;" src="--><?//=$imgPath."/".$resultKeyword?><!--.png">-->
 <!--    <img width="100%" height="100%" style="position:absolute;left:0;top:0;text-align: center;z-index: 998;" src="--><?//=$imgPath."/{$resultKeyword}_".$result?><!--.png">-->
 <?php } ?>
-    </div>
-</div>
+
 <script>
     var result = <?php if(!isset($result)||$result === -1){echo 0;}else{echo 1;}?>;
     var url = "<?= isset($qrPath)&&isset($winCode)?Yii::$app->urlManager->createAbsoluteUrl(['wc-site/qr-code','img'=>$qrPath,'winCode'=>$winCode]):'';?>";
@@ -86,6 +84,16 @@ if(!isset($result)||$result === -1){
     $
 </script>
 <style>
+    #info{padding: 0;margin: 0;
+        /*width:300px;
+        height:225px;
+        position: absolute;
+        bottom: 5%;
+        left: 8%;*/
+        display: table;width: auto;min-width:250px;margin: 85%  auto 0;
+        /* margin-left: -100px;*/
+        /*background-image:url("<?=$imgPath?>/gz_back.png?>") ;*/
+    }
     .win_back{
         /*width: 200px;*/
         /*height: 137px;*/

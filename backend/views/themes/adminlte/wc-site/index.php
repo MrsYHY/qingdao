@@ -20,9 +20,8 @@ $musicPath = $this->getAssetManager()->publish('@wechat/music/')[1];
             if(apiResult.err_code == 0){
                 var status = apiResult.data;
                 if(status == 1){
-                    alert('已关注');
                 }else{
-                    alert('未关注');
+                    alert('您还没有关注我们哦！');
                     //跳转到关注页
                     BeaconAddContactJsBridge.invoke('jumpAddContact');
                 }
@@ -58,13 +57,13 @@ $musicPath = $this->getAssetManager()->publish('@wechat/music/')[1];
     $(document).ready(function(){
         var myAudioWin = new Audio("<?=$musicPath?>/rock.mp3");
         var localStorage = window.localStorage;
-        if (localStorage.getItem("first") == null || localStorage.getItem("first") == undefined){
-            localStorage.setItem("first",1);
-            window.location.href = "<?=Yii::$app->urlManager->createAbsoluteUrl(['wc-site/guanzhu'])?>";
-        }
+<!--        if (localStorage.getItem("first") == null || localStorage.getItem("first") == undefined){-->
+<!--            localStorage.setItem("first",1);-->
+<!--            window.location.href = "--><?//=Yii::$app->urlManager->createAbsoluteUrl(['wc-site/guanzhu'])?><!--";-->
+<!--        }-->
 
-        var keyForStorage = 'openId';//localStorage.clear(keyForStorage)
-        localStorage.setItem(keyForStorage,user_token);
+//        var keyForStorage = 'openId';//localStorage.clear(keyForStorage)
+//        localStorage.setItem(keyForStorage,user_token);
 //        alert(localStorage.getItem(keyForStorage));
 
         if (window.DeviceMotionEvent) {

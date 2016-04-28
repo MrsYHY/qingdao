@@ -12,6 +12,7 @@ namespace backend\controllers;
 use backend\config\SystemConfig;
 use backend\forms\WeChatForm;
 use backend\services\WcSiteService;
+use callmez\wechat\sdk\mp\ShakeAround;
 use common\activeRecords\LuckDrawResult;
 use common\activeRecords\Prizes;
 use common\activeRecords\TerminalUser;
@@ -38,8 +39,23 @@ class WcSiteController extends BaseController{
         $wechatForm = new WeChatForm();
         $wechatForm->setScenario('luck_draw_page');
 
+        $ticket = $this->request('ticket');
+        if (empty($ticket)){
+            $openId = Tool::randAbc(10).date("YmdHis",time());
+        }else{
+            $shakeWechat = new ShakeAround(\Yii::$app->mp_wechat);
+            $data = $shakeWechat->getUserShakeInfo(['ticket'=>$ticket]);
+            if (empty($data)){
+                $openId = Tool::randAbc(10).date("YmdHis",time());
+            }else if(isset($data->openid)) {
+                $openId = $data->openid;
+            }else{
+                $openId = Tool::randAbc(10).date("YmdHis",time());
+            }
+        }
+
         $user = new TerminalUser();
-        $user->terminal_user_token = Tool::randAbc(10).date("YmdHis",time());
+        $user->terminal_user_token = $openId;
         $user->role = TerminalUser::ROLE_XIAOFEI;
         $user->draw_luck_total = SystemConfig::LUCK_DRAW_TOTAL;
         $user->draw_luck_num = 0;
