@@ -46,7 +46,7 @@ class WcSiteService extends WeChatService{
             $user->last_luck_draw_time = date('Y-m-d',time());
             $user->draw_luck_num = 0;
         }
-        if ($user->draw_luck_num > $user->draw_luck_total){
+        if ($user->draw_luck_num > BaseConfig::LUCK_DRAW_TOTAL){
             $this->failByJson("没有机会摇奖了！");
         }
 

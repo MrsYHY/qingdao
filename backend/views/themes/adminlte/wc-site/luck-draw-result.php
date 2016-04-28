@@ -27,10 +27,10 @@ if(!isset($result)||$result === -1){
 <?php }else{?>
 <div style="position: absolute;bottom: 15%;width:80%;height:30%;left: 10%;">
     <div class="info" style="width: 100%;height: 100%;">
-        <div class="" style="border-top-left-radius: 20px;border-top-right-radius:20px;background-color: #ffffff;border-bottom: 2px solid #127500;text-align: center;color: #127500;font-size:18px;font-weight:bold;font-family: '黑体'">恭喜您获得</div>
+        <div class="" style="border-top-left-radius: 20px;border-top-right-radius:20px;background-color: #ffffff;border-bottom: 2px solid #127500;text-align: center;color: #127500;font-size:22px;font-weight:bold;font-family: '黑体'">恭喜您获得</div>
         <div class="" style="height:100%;background-color: white;border-bottom-left-radius: 20px;border-bottom-right-radius: 20px;">
             <div style="width: 50%;height: 80%;float: left;margin:10% auto;vertical-align:middle; text-align:center; "><img width="50%" height="100%" src="<?=$imgPath?>/qingdao.gif"/></div>
-            <div style="padding:10% 5%;width: 50%;height: 100%;float: left;text-align: center;font-size:18px;font-family: '黑体' "><?=$prizeName;?></div>
+            <div style="padding:10% 5%;width: 50%;height: 100%;float: left;min-height:144px; text-align: center;font-size:18px;font-family: '黑体' "><?=$prizeName;?></div>
         </div>
     </div>
 </div>
