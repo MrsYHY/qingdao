@@ -34,8 +34,8 @@ if(!isset($result)||$result === -1){
         </div>
     </div>
 </div>
-<div style="position: absolute;bottom: -2%;width:10%;height:10%;left: 40%;z-index: 998;">
-    <span id='awardForMe' class="btn btn-primary" style="">
+<div style="position: absolute;bottom: -2%;width:30%;height:10%;left: 35%;z-index: 998;">
+    <span id='awardForMe' class="btn btn-primary" style="padding-top:5%;;margin:0;color:white;background-color: #DA7809;border: none;width: 100%;height: 60%;border-radius: 20px;">
         确认领奖
     </span>
 </div>
