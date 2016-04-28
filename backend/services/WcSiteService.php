@@ -8,7 +8,7 @@
 
 namespace backend\services;
 
-
+use backend\config\SystemConfig;
 use backend\forms\WeChatForm;
 use common\activeRecords\Activitys;
 use common\activeRecords\Devices;
@@ -46,7 +46,7 @@ class WcSiteService extends WeChatService{
             $user->last_luck_draw_time = date('Y-m-d',time());
             $user->draw_luck_num = 0;
         }
-        if ($user->draw_luck_num > BaseConfig::LUCK_DRAW_TOTAL){
+        if ($user->draw_luck_num > SystemConfig::LUCK_DRAW_TOTAL){
             $this->failByJson("没有机会摇奖了！");
         }
 

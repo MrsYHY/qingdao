@@ -23,7 +23,7 @@ $musicPath = $this->getAssetManager()->publish('@wechat/music/')[1];
                 }else{
                     alert('您还没有关注我们哦！');
                     //跳转到关注页
-//                    BeaconAddContactJsBridge.invoke('jumpAddContact');
+                    BeaconAddContactJsBridge.invoke('jumpAddContact');
                 }
             }else{
                 alert(apiResult.err_msg)
