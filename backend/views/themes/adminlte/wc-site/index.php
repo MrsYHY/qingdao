@@ -113,6 +113,7 @@ $musicPath = $this->getAssetManager()->publish('@wechat/music/')[1];
                         data:{user_token:user_token,activity_id:activity_id,device_id:device_id,open_id:user_token},
                         dataType:'json',
                         success:function(data){
+                            canRequest = true;
                             if (data.code == 1) {
                                 var luckDrawResultUrl = <?='"'.Yii::$app->urlManager->createAbsoluteUrl(['wc-site/luck-draw-result']).'"'?>;
                                 res_user_token = data.message.user_token;
@@ -127,7 +128,7 @@ $musicPath = $this->getAssetManager()->publish('@wechat/music/')[1];
 //                                $("#info").css({display:"block"});
                                 setTimeout(function(){$("#info").html('')},1000);
                             }
-                            canRequest = true;
+                         //   canRequest = true;
                         }
                     })
                 }
