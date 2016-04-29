@@ -83,6 +83,7 @@ class WcSiteController extends BaseController{
      * @params device_id 设备id
      */
     public function actionLuckDraw(){
+        set_time_limit(0);
         $service = $this->getService();
 
         $wechat = new WeChatForm();

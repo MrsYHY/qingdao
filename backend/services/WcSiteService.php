@@ -8,7 +8,7 @@
 
 namespace backend\services;
 
-
+use backend\config\SystemConfig;
 use backend\forms\WeChatForm;
 use common\activeRecords\Activitys;
 use common\activeRecords\Devices;
@@ -31,6 +31,8 @@ class WcSiteService extends WeChatService{
      */
     public function luckDraw(WeChatForm $weChatForm){
 
+        LuckDrawResult::heXiao();//将半个小时没有兑奖的记录变成没有兑奖 对应的奖品数量+1
+
         if ($weChatForm->open_id !== $weChatForm->user_token) {
             TerminalUser::deleteAll(['terminal_user_token'=>$weChatForm->user_token]);
             $weChatForm->user_token = null;
@@ -46,7 +48,7 @@ class WcSiteService extends WeChatService{
             $user->last_luck_draw_time = date('Y-m-d',time());
             $user->draw_luck_num = 0;
         }
-        if ($user->draw_luck_num > $user->draw_luck_total){
+        if ($user->draw_luck_num > SystemConfig::LUCK_DRAW_TOTAL){
             $this->failByJson("没有机会摇奖了！");
         }
 

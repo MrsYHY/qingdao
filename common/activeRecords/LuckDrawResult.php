@@ -161,4 +161,27 @@ class LuckDrawResult extends \common\activeRecords\BaseActiveRecord
         $s = self::find()->where('created_at>"'.$start.'"')->andWhere('created_at<"'.$end.'"')->select(['user_id'])->distinct()->count();
         return $s;
     }
+
+    /**
+     * 核销
+     */
+    public static function heXiao(){
+        $start = date("Y-m-d H:i:s",time()-60*30);
+        $result = self::find()->where(['is_award'=>self::NOT_AWARD])->andWhere(['result'=>self::ZHONG])->andWhere(['created_at<="'.$start.'"'])->all();
+        foreach ($result as $_r) {
+            $prize = Prizes::findByPk($_r->prize_id);
+            if (!empty($prize)) {
+                $prize->num = $prize->num + 1;
+                if ($prize->save()){
+                    $_r->result = self::NOT_ZHONG;
+                    $_r->is_award = -1;
+                    $_r->prize_id = 0;
+                    $_r->prize_level = -1;
+                    if ($_r->save()){
+
+                    }
+                }
+            }
+        }
+    }
 }
