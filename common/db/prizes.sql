@@ -1,1 +1,0 @@
-INSERT INTO `prizes` VALUES (1, 'QINGDAO', 1, '45678', 78, 0, 0.000);

@@ -22,37 +22,42 @@ use yii\base\Exception;
 use yii\helpers\ArrayHelper;
 use yii\db\Connection;
 
-class WcSiteService extends WeChatService{
+class WcSiteService extends WeChatService
+{
 
-    static $PRIZE_FOR_IMAGE = ['QINGDAO'=>'qingdao','IWATCH'=>'watch'];
+    static $PRIZE_FOR_IMAGE = ['QINGDAO' => 'qingdao', 'IWATCH' => 'watch'];
 
     /**
      * 摇奖请求
      */
-    public function luckDraw(WeChatForm $weChatForm){
+    public function luckDraw(WeChatForm $weChatForm)
+    {
 
-        LuckDrawResult::heXiao();//将半个小时没有兑奖的记录变成没有兑奖 对应的奖品数量+1
+        //LuckDrawResult::heXiao();//将半个小时没有兑奖的记录变成没有兑奖 对应的奖品数量+1
 
         if ($weChatForm->open_id !== $weChatForm->user_token) {
-            TerminalUser::deleteAll(['terminal_user_token'=>$weChatForm->user_token]);
+            TerminalUser::deleteAll(['terminal_user_token' => $weChatForm->user_token]);
             $weChatForm->user_token = null;
         }
 
         //判断是否关注
         $user_token = $weChatForm->open_id;
         $user = TerminalUser::getByTerminalUserToken($user_token);
-        if (empty($user_token)){
+        if (empty($user_token)) {
 
         }
-        if (date("Y-m-d",$user->last_luck_draw_time) !== date('Y-m-d',time())){
-            $user->last_luck_draw_time = date('Y-m-d',time());
+        if (empty($user)) {
+            $this->failByJson("您没有机会抽奖咯");
+        }
+        if (date("Y-m-d", $user->last_luck_draw_time) !== date('Y-m-d', time())) {
+            $user->last_luck_draw_time = date('Y-m-d', time());
             $user->draw_luck_num = 0;
         }
-        if ($user->draw_luck_num > SystemConfig::LUCK_DRAW_TOTAL){
+        if ($user->draw_luck_num > SystemConfig::LUCK_DRAW_TOTAL) {
             $this->failByJson("没有机会摇奖了！");
         }
 
-        if ($user->draw_luck_num == -1){
+        if ($user->draw_luck_num == -1) {
             $this->failByJson("您没有机会抽奖咯");
         }
 
@@ -63,7 +68,7 @@ class WcSiteService extends WeChatService{
             $this->failByJson('活动已经结束啦！');
         }
 
-              //判断设备id是否合法
+        //判断设备id是否合法
         $device_id = $weChatForm->device_id;
         $device = Devices::fingByDeviceId($device_id);
         if (empty($device)) {
@@ -78,26 +83,27 @@ class WcSiteService extends WeChatService{
         $win = [];
         $level_id = [];
         $winSum = 0;
-        foreach ( $prizes as $p ) {
-            $win [$p->prize_level] = floor(($p->win_rate*10000)%10000);
+        foreach ($prizes as $p) {
+            $win [$p->prize_level] = floor(($p->win_rate * 10000) % 10000);
             $level_id [$p->prize_level] = $p->id;
-            $winSum += floor(($p->win_rate*10000)%10000);
+            $winSum += floor(($p->win_rate * 10000) % 10000);
         }
         $win [-1] = 10000 - $winSum;
         $luckDraw = array();
-        foreach ($win as $key=>$value )
-        {
-            for($j = 0; $j < $value; $j++){
-                $luckDraw[]=$key;
+        foreach ($win as $key => $value) {
+            for ($j = 0; $j < $value; $j++) {
+                $luckDraw[] = $key;
             }
         }
-        shuffle($luckDraw);shuffle($luckDraw);shuffle($luckDraw);
+        shuffle($luckDraw);
+        shuffle($luckDraw);
+        shuffle($luckDraw);
         $k = $luckDraw[array_rand($luckDraw)];
-        if ($k == -1){
+        if ($k == -1) {
             $user->last_luck_draw_time = time();
-            $user->draw_luck_num = $user->draw_luck_num +1;
+            $user->draw_luck_num = $user->draw_luck_num + 1;
             $user->sign_in_num = 0;
-            if (!$user->save()){
+            if (!$user->save()) {
 
             }
 
@@ -107,11 +113,11 @@ class WcSiteService extends WeChatService{
             $luckDrawResult->activity_id = $activity_id;
             $luckDrawResult->prize_id = 0;
             $luckDrawResult->prize_level = -1;
-            $luckDrawResult->created_at = date("Y-m-d H:i:s",time());
+            $luckDrawResult->created_at = date("Y-m-d H:i:s", time());
             $luckDrawResult->device_id = $device->id;
             $luckDrawResult->is_award = -1;
             $luckDrawResult->win_code = '';
-            if (!$luckDrawResult->save()){
+            if (!$luckDrawResult->save()) {
 
             }
             $res = new \stdClass();
@@ -121,31 +127,31 @@ class WcSiteService extends WeChatService{
             $res->result = $luckDrawResult->id;
             $this->successByJson($res);
         }
-        try{
-            $resultId = \Yii::$app->db->transaction(function()use($device,$user_token,$level_id,$activity_id,$k){
+        try {
+            $resultId = \Yii::$app->db->transaction(function () use ($device, $user_token, $level_id, $activity_id, $k) {
                 $prizeId = $level_id[$k];
                 $sql = "SELECT * FROM prizes where id={$prizeId} for update";
                 $prizes = Prizes::findBySql($sql)->one();
-                if (empty($prizes)){
-                    throw new DbException("找不到该奖品，奖品id为".$prizeId);
+                if (empty($prizes)) {
+                    throw new DbException("找不到该奖品，奖品id为" . $prizeId);
                 }
                 if ($prizes->num == 0) {
-                    throw new DbException("该奖品被摇光啦！",1);
+                    throw new DbException("该奖品被摇光啦！", 1);
                 }
-                $prizes->num = $prizes->num -1;
+                $prizes->num = $prizes->num - 1;
                 if (!$prizes->save()) {
-                    throw new DbException("奖品库存保存失败啦",2);
+                    throw new DbException("奖品库存保存失败啦", 2);
                 }
 
                 $user = TerminalUser::getByTerminalUserToken($user_token);
-                if (empty($user)){
-                    throw new DbException('系统找不到您的信息',3);
+                if (empty($user)) {
+                    throw new DbException('系统找不到您的信息', 3);
                 }
                 $user->draw_luck_num = $user->draw_luck_num + 1;;
                 $user->last_luck_draw_time = time();
                 $user->sign_in_num = 0;
-                if (!$user->save()){
-                    throw new DbException('保存您的信息失败了',5);
+                if (!$user->save()) {
+                    throw new DbException('保存您的信息失败了', 5);
                 }
 
                 $luckDrawResult = new LuckDrawResult();
@@ -154,16 +160,16 @@ class WcSiteService extends WeChatService{
                 $luckDrawResult->activity_id = $activity_id;
                 $luckDrawResult->prize_id = $prizes->id;
                 $luckDrawResult->prize_level = $k;
-                $luckDrawResult->created_at = date("Y-m-d H:i:s",time());
+                $luckDrawResult->created_at = date("Y-m-d H:i:s", time());
                 $luckDrawResult->device_id = $device->id;
                 $luckDrawResult->is_award = LuckDrawResult::NOT_AWARD;
-                $luckDrawResult->win_code = Tool::randAbc(8).date("His",time());
-                if (!$luckDrawResult->save()){
-                    throw new DbException('生成中奖纪录失败',4);
+                $luckDrawResult->win_code = Tool::randAbc(8) . date("His", time());
+                if (!$luckDrawResult->save()) {
+                    throw new DbException('生成中奖纪录失败', 4);
                 }
                 return $luckDrawResult->id;
             });
-        }catch (Exception $e){
+        } catch (Exception $e) {
             $this->failByJson($e->getMessage());
         }
         $res = new \stdClass();
@@ -174,19 +180,20 @@ class WcSiteService extends WeChatService{
         $this->successByJson($res);
     }
 
-    public function comfirm($params){
+    public function comfirm($params)
+    {
         $luckDrawResult = LuckDrawResult::findByPk($params['result_id']);
         if (empty($luckDrawResult)) {
             return '没有中奖纪录';
         }
-        if ($luckDrawResult->result == LuckDrawResult::NOT_ZHONG){
+        if ($luckDrawResult->result == LuckDrawResult::NOT_ZHONG) {
             return "该纪录没有中奖哈";
         }
         if ($luckDrawResult->is_award == LuckDrawResult::AWARD) {
             return '您已经兑奖过了!';
         }
         $luckDrawResult->is_award = LuckDrawResult::AWARD;
-        if ($luckDrawResult->save()){
+        if ($luckDrawResult->save()) {
             return $luckDrawResult;
         }
         return '更新中奖纪录失败!';
