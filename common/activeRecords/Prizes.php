@@ -32,9 +32,10 @@ class Prizes extends \common\activeRecords\BaseActiveRecord
         'IWATCH'=>'苹果iWatch',
         'QINGDAO'=>'青岛啤酒',
         'CHONGDIANBAO'=>'充电宝',
-        'DAHUOJI'=>'经典1903打火机',
+        'DAHUOJI'=>'青岛啤酒打火机',
         'PIJIUBOLITAOBEN'=>'青岛啤酒玻璃套杯',
-        'IPONE6S'=>'IPONE6S'];
+        'IPONE6S'=>'IPONE6S',
+        'ZHEYANGBAN'=>'青岛啤酒汽车防晒隔热遮阳板'];
 
     /**
      * @inheritdoc
