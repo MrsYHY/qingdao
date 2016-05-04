@@ -33,7 +33,10 @@ class WcSiteService extends WeChatService
     public function luckDraw(WeChatForm $weChatForm)
     {
 
-        //LuckDrawResult::heXiao();//将半个小时没有兑奖的记录变成没有兑奖 对应的奖品数量+1
+        $minutes = (int)date("i",time());
+        if ($minutes >= 0 && $minutes <= 10 || $minutes>=30 && $minutes <= 40 || 1==1) {//防止频繁访问数据库 仅仅在半个小时内核销十分钟
+            LuckDrawResult::heXiao();//将半个小时没有兑奖的记录变成没有兑奖 对应的奖品数量+1
+        }
 
         if ($weChatForm->open_id !== $weChatForm->user_token) {
             TerminalUser::deleteAll(['terminal_user_token' => $weChatForm->user_token]);

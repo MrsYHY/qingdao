@@ -167,21 +167,28 @@ class LuckDrawResult extends \common\activeRecords\BaseActiveRecord
      */
     public static function heXiao(){
         $start = date("Y-m-d H:i:s",time()-60*30);
-        $result = self::find()->where(['is_award'=>self::NOT_AWARD])->andWhere(['result'=>self::ZHONG])->andWhere('created_at<="'.$start.'"')->all();
-        foreach ($result as $_r) {
-            $prize = Prizes::findByPk($_r->prize_id);
-            if (!empty($prize)) {
-                $prize->num = $prize->num + 1;
-                if ($prize->save()){
-                    $_r->result = self::NOT_ZHONG;
-                    $_r->is_award = -1;
-                    $_r->prize_id = 0;
-                    $_r->prize_level = -1;
-                    if ($_r->save()){
+        $i = 0;
+        while($i < 100) {
+            $result = self::find()->where(['is_award'=>self::NOT_AWARD])->andWhere(['result'=>self::ZHONG])->andWhere('created_at<="'.$start.'"')->one();
+            if(!empty($result)) {
+                $prize = Prizes::findByPk($result->prize_id);
+                if (!empty($prize)) {
+                    $prize->num = $prize->num + 1;
+                    if ($prize->save()){
+                        $result->result = self::NOT_ZHONG;
+                        $result->is_award = -1;
+                        $result->prize_id = 0;
+                        $result->prize_level = -1;
+                        if ($result->save()){
 
+                        }
                     }
                 }
+            }else{
+                break;
             }
+            $i++;
         }
+
     }
 }
